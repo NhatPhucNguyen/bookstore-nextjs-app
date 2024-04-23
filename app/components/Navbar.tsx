@@ -2,8 +2,10 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
-
-const Navbar = () => {
+type NavarProps = {
+    simple?: boolean;
+};
+const Navbar = ({ simple }: NavarProps) => {
     const [openDropdown, setOpenDropdown] = useState(false);
     return (
         <>
@@ -23,29 +25,46 @@ const Navbar = () => {
                             Home
                         </Link>
                     </li>
-                    <li>
-                        <Link href={"/"} className="hover:text-secondary">
-                            Books
-                        </Link>
-                    </li>
-                    <li>
-                        <Link href={"/"} className="hover:text-secondary">
-                            Trending
-                        </Link>
-                    </li>
-                    <li>
-                        <Link href={"/"} className="hover:text-secondary">
-                            About Us
-                        </Link>
-                    </li>
-                    <li>
-                        <Link href={"/"} className="hover:text-secondary">
-                            Login
-                        </Link>
-                    </li>
+                    {!simple && (
+                        <>
+                            <li>
+                                <Link
+                                    href={"/"}
+                                    className="hover:text-secondary"
+                                >
+                                    Books
+                                </Link>
+                            </li>
+                            <li>
+                                <Link
+                                    href={"/"}
+                                    className="hover:text-secondary"
+                                >
+                                    Trending
+                                </Link>
+                            </li>
+                            <li>
+                                <Link
+                                    href={"/"}
+                                    className="hover:text-secondary"
+                                >
+                                    About Us
+                                </Link>
+                            </li>
+                            <li>
+                                <Link
+                                    href={"/login"}
+                                    className="hover:text-secondary"
+                                >
+                                    Login
+                                </Link>
+                            </li>
+                        </>
+                    )}
+
                     <li>
                         <Link
-                            href={"/"}
+                            href={"/register"}
                             className="bg-secondary text-white px-2 py-3 rounded-md hover:bg-white hover:text-secondary"
                         >
                             Create account
@@ -104,42 +123,47 @@ const Navbar = () => {
             <div
                 className={`${
                     openDropdown ? "absolute" : "hidden"
-                }  md:hidden w-full right-0 bg-black`}
+                }  md:hidden w-full right-0 bg-gray-900`}
                 id="mobile-menu"
             >
                 <div className="space-y-1 px-2 pb-3 pt-2">
                     <Link
                         href="/"
-                        className="bg-gray-900 text-white block rounded-md px-3 py-2 text-base font-medium"
+                        className="bg-gray-800 text-white block rounded-md px-3 py-2 text-base font-medium"
                     >
                         Home
                     </Link>
+                    {!simple && (
+                        <>
+                            <Link
+                                href="#"
+                                className="text-gray-300 hover:bg-gray-700 hover:text-white block rounded-md px-3 py-2 text-base font-medium"
+                            >
+                                Books
+                            </Link>
+                            <Link
+                                href="#"
+                                className="text-gray-300 hover:bg-gray-700 hover:text-white block rounded-md px-3 py-2 text-base font-medium"
+                            >
+                                Trending
+                            </Link>
+                            <Link
+                                href="#"
+                                className="text-gray-300 hover:bg-gray-700 hover:text-white block rounded-md px-3 py-2 text-base font-medium"
+                            >
+                                About Us
+                            </Link>
+                            <Link
+                                href="/login"
+                                className="text-gray-300 hover:bg-gray-700 hover:text-white block rounded-md px-3 py-2 text-base font-medium"
+                            >
+                                Login
+                            </Link>
+                        </>
+                    )}
+
                     <Link
-                        href="#"
-                        className="text-gray-300 hover:bg-gray-700 hover:text-white block rounded-md px-3 py-2 text-base font-medium"
-                    >
-                        Books
-                    </Link>
-                    <Link
-                        href="#"
-                        className="text-gray-300 hover:bg-gray-700 hover:text-white block rounded-md px-3 py-2 text-base font-medium"
-                    >
-                        Trending
-                    </Link>
-                    <Link
-                        href="#"
-                        className="text-gray-300 hover:bg-gray-700 hover:text-white block rounded-md px-3 py-2 text-base font-medium"
-                    >
-                        About Us
-                    </Link>
-                    <Link
-                        href="#"
-                        className="text-gray-300 hover:bg-gray-700 hover:text-white block rounded-md px-3 py-2 text-base font-medium"
-                    >
-                        Login
-                    </Link>
-                    <Link
-                        href="#"
+                        href="/register"
                         className="text-white bg-secondary hover:bg-gray-700 hover:text-white block rounded-md px-3 py-2 text-base font-medium"
                     >
                         Create Account

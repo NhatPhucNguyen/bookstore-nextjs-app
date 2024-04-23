@@ -1,3 +1,15 @@
+import Jumbotron from "./components/Jumbotron";
+import Navbar from "./components/Navbar";
+
 export default function Home() {
-    return <h1 className="font-bold text-xl">Main page</h1>;
+    return (
+        <>
+            <header>
+                <Navbar />
+            </header>
+            <main className="md:px-2">
+                <Jumbotron />
+            </main>
+        </>
+    );
 }
