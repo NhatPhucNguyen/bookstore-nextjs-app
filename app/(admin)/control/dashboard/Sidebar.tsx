@@ -1,6 +1,9 @@
 "use client";
 import React, { useState } from "react";
-import Backdrop from "./Backdrop";
+import Backdrop from "../../../components/Backdrop";
+import Image from "next/image";
+import Link from "next/link";
+import SidebarLinks from "./SidebarLinks";
 
 const Sidebar = () => {
     const [open, setOpen] = useState(false);
@@ -23,18 +26,34 @@ const Sidebar = () => {
                     xmlns="http://www.w3.org/2000/svg"
                 >
                     <path
-                        clip-rule="evenodd"
-                        fill-rule="evenodd"
+                        clipRule="evenodd"
+                        fillRule="evenodd"
                         d="M2 4.75A.75.75 0 012.75 4h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 4.75zm0 10.5a.75.75 0 01.75-.75h7.5a.75.75 0 010 1.5h-7.5a.75.75 0 01-.75-.75zM2 10a.75.75 0 01.75-.75h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 10z"
                     ></path>
                 </svg>
             </button>
             <aside
                 className={`${
-                    open ? "fixed" : "hidden"
-                } sm:block sm:fixed left-0 right-0 h-screen bg-blue-600 w-64 z-20 animate-sidebar transition-transform`}
+                    open ? "translate-x-0" : "-translate-x-full"
+                } flex sm:translate-x-0 flex-col fixed left-0 top-0 h-screen bg-[#152259] w-64 z-20 animate-sidebar transition-transform text-white`}
             >
-                Sidebar
+                <section className="border-b-2 pb-3">
+                    <Image
+                        src={"/bookstore-trans.png"}
+                        alt=""
+                        width={70}
+                        height={70}
+                        className="mx-auto"
+                    />
+                    <h1 className="font-bold text-center">BookFinder</h1>
+                </section>
+                <SidebarLinks />
+                <button
+                    type="button"
+                    className="block w-20 py-2 bg-active mt-auto mx-auto mb-4 rounded-md hover:bg-blueHover font-bold"
+                >
+                    Logout
+                </button>
             </aside>
             {open && (
                 <Backdrop

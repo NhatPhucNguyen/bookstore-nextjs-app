@@ -17,6 +17,8 @@ const config: Config = {
             },
             colors: {
                 secondary: "#9747FF",
+                active: "#509CDB",
+                blueHover:"#2671B1",
             },
             keyframes: {
                 "fade-in-down": {

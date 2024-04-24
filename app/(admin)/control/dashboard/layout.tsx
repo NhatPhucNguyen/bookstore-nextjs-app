@@ -1,6 +1,6 @@
 import { Metadata } from "next";
 import React, { ReactNode } from "react";
-import Sidebar from "../components/Sidebar";
+import Sidebar from "./Sidebar";
 export const metadata: Metadata = {
     title: "Dashboard",
     description: "Dashboard page for BookFinder",
