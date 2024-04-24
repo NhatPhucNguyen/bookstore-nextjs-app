@@ -26,7 +26,7 @@ const ModalContextProvider = ({ children }: { children: ReactNode }) => {
             {modal.open && (
                 <Backdrop
                     handleClose={closeModal}
-                    className="fixed min-h-screen w-full top-0 left-0 justify-center items-center flex z-30 p-2 overflow-auto"
+                    className="fixed min-h-screen w-full top-0 left-0 z-30 p-2 overflow-auto"
                 >
                     {modal.formName === "addAuthor" && <AuthorForm />}
                 </Backdrop>
