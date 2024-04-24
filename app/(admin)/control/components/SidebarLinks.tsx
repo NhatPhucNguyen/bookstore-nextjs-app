@@ -6,6 +6,7 @@ import { IconType } from "react-icons";
 import { IoIosPerson } from "react-icons/io";
 import { IoBookSharp } from "react-icons/io5";
 import { FaMoneyBillTrendUp } from "react-icons/fa6";
+import { MdCategory } from "react-icons/md";
 type LinkItemProps = {
     href: string;
     displayName: string;
@@ -34,13 +35,14 @@ const SidebarLinks = () => {
     return (
         <ul className="font-bold text-sm">
             <LinkItem
-                href={"/dashboard"}
+                href={"/control/dashboard"}
                 displayName="Dashboard"
                 Icon={RiDashboard2Line}
             />
-            <LinkItem href={"/authors"} displayName="Authors" Icon={IoIosPerson}/>
-            <LinkItem href={"/books"} displayName="Books" Icon={IoBookSharp}/>
-            <LinkItem href={"/orders"} displayName="Orders" Icon={FaMoneyBillTrendUp}/>
+            <LinkItem href={"/control/authors"} displayName="Authors" Icon={IoIosPerson}/>
+            <LinkItem href={"/control/books"} displayName="Books" Icon={IoBookSharp}/>
+            <LinkItem href={"/control/genres"} displayName="Genre" Icon={MdCategory}/>
+            <LinkItem href={"/control/orders"} displayName="Orders" Icon={FaMoneyBillTrendUp}/>
         </ul>
     );
 };

@@ -2,7 +2,6 @@
 import React, { useState } from "react";
 import Backdrop from "../../../components/Backdrop";
 import Image from "next/image";
-import Link from "next/link";
 import SidebarLinks from "./SidebarLinks";
 
 const Sidebar = () => {
@@ -60,6 +59,7 @@ const Sidebar = () => {
                     handleClose={() => {
                         setOpen(false);
                     }}
+                    className="sm:hidden"
                 />
             )}
         </>

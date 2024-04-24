@@ -1,5 +1,9 @@
+import { Metadata } from 'next';
 import React from 'react'
-
+export const metadata: Metadata = {
+  title: "Dashboard",
+  description: "Dashboard page for BookFinder",
+};
 const DashBoard = () => {
   return (
     <div className='sm:mt-10'>

@@ -1,13 +1,6 @@
 import React, { ReactNode } from "react";
-const FormController = ({
-    children,
-    className,
-}: {
-    children: ReactNode;
-    className?: string;
-}) => {
-    return <div className={`w-full mb-2 ${className}`}>{children}</div>;
-};
+import FormController from "../components/FormController";
+
 const Login = () => {
     return (
         <div className="w-full px-2 md:w-1/2 py-16 mx-auto animate-fade-in-down">
