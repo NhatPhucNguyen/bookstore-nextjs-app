@@ -2,6 +2,8 @@ import { Suspense } from "react";
 import AuthorHeading from "./AuthorHeading";
 import AuthorList from "./AuthorList";
 import Loading from "./loading";
+import { mainTitle, metadata } from "@/app/layout";
+metadata.title = mainTitle + " | Authors";
 const Page = () => {
     return (
         <div className="sm:mt-10 pl-2">

@@ -11,7 +11,7 @@ const AuthorHeading = () => {
             <div className="text-md">
                 <Button
                     onClick={() => {
-                        openModal("addAuthor");
+                        openModal({ formName: "addAuthor" });
                     }}
                 >
                     Add Authors

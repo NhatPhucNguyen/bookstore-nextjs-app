@@ -21,16 +21,32 @@ export const createAuthor = async (author: Author) => {
 export const getAuthors = async () => {
     try {
         const authors = await prisma.author.findMany({
-            orderBy:{
-                updatedAt:"asc",
-            }
+            orderBy: {
+                updatedAt: "asc",
+            },
         });
         return {
-            authors:authors as Author[],
+            authors: authors as Author[],
         };
     } catch (e) {
         return {
             errorMessage: "Failed to get authors!",
+        };
+    }
+};
+
+export const updateAuthor = async (id: string, author: Author) => {
+    try {
+        await prisma.author.update({
+            where: {
+                id,
+            },
+            data: author,
+        });
+        revalidatePath("/control/authors");
+    } catch (e) {
+        return {
+            message: "Failed to update author!",
         };
     }
 };

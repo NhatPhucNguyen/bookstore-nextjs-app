@@ -6,7 +6,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { Author } from "@prisma/client";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-import { createAuthor } from "./actions";
+import { createAuthor, updateAuthor } from "./actions";
 import { useToastContext } from "@/app/context/ToastContext";
 const authorSchema = z.object({
     name: z.string().min(1, {
@@ -42,17 +42,39 @@ const authorSchema = z.object({
         .optional()
         .or(z.literal("")),
 });
-const AuthorForm = () => {
+type AuthorFormProps = {
+    author?: Author;
+};
+const AuthorForm = ({ author }: AuthorFormProps) => {
     const {
         register,
         handleSubmit,
         formState: { errors },
     } = useForm<Author>({
         resolver: zodResolver(authorSchema),
+        defaultValues: author
+            ? {
+                  name: author.name,
+                  bio: author.bio,
+                  imageUrl: author.imageUrl,
+                  website: author.website,
+              }
+            : undefined,
     });
     const { closeModal } = useModalContext();
     const { toastError, toastSuccess } = useToastContext();
     const onSubmit = handleSubmit(async (data) => {
+        //update author if author exists
+        if (author) {
+            const response = await updateAuthor(author.id, data);
+            if (response?.message) {
+                toastError(response.message);
+                return;
+            }
+            toastSuccess("Author updated successfully!");
+            return closeModal();
+        }
+        //create author
         const response = await createAuthor(data);
         if (response?.message) {
             toastError(response.message);
@@ -114,6 +136,9 @@ const AuthorForm = () => {
                         className={`w-full p-2 outline-none rounded-md focus:bg-opacity-50 border "border-gray-300" focus:bg-green-100 ${
                             errors.dateOfBirth && "border-red-500"
                         }`}
+                        defaultValue={
+                            author?.dateOfBirth?.toISOString().split("T")[0]
+                        }
                     />
                 </FormController>
                 <FormController error={errors.website}>
@@ -130,7 +155,7 @@ const AuthorForm = () => {
                     />
                 </FormController>
                 <div className="w-full flex flex-row gap-4 justify-between mt-4 pb-1">
-                    <Button type="submit">Add</Button>
+                    <Button type="submit">{author ? "Update" : "Add"}</Button>
                     <Button
                         type="button"
                         className="bg-orange-400 hover:bg-orange-600"

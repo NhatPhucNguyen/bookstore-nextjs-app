@@ -3,10 +3,10 @@ import { AppRouterCacheProvider } from "@mui/material-nextjs/v14-appRouter";
 import { Inter } from "next/font/google";
 import "./globals.css";
 const inter = Inter({ subsets: ["latin"] });
-
+export const mainTitle = "BookFinder";
 export const metadata: Metadata = {
-    title: "Home",
-    description: "BookFinder - Find your favorite books here!",
+    title: mainTitle,
+    description: `${mainTitle} - Find your favorite books here!`,
 };
 
 export default function RootLayout({

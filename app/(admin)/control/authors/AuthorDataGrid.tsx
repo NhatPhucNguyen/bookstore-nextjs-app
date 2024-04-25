@@ -11,23 +11,23 @@ import { MdDelete, MdEditDocument } from "react-icons/md";
 import { deleteAuthor } from "./actions";
 import { useToastContext } from "@/app/context/ToastContext";
 import Link from "@mui/material/Link";
+import { useModalContext } from "@/app/context/ModalContext";
+import { useRouter } from "next/navigation";
 type AuthorDataGridProps = {
     authors: Author[];
 };
 const AuthorDataGrid = ({ authors }: AuthorDataGridProps) => {
     const { toastSuccess, toastError } = useToastContext();
-    const rows = authors.map((author) => {
-        return {
-            id: author.id,
-            name: author.name,
-            bio: author.bio,
-            imageUrl: author.imageUrl,
-            updatedAt: author.updatedAt,
-        };
-    });
+    const { openModal } = useModalContext();
+    const router = useRouter();
     const cols: GridColDef[] = [
         { field: "name", headerName: "Name", width: 150, hideable: false },
-        { field: "bio", headerName: "Bio", width: 150,valueFormatter: (val: string) => val || "N/A"},
+        {
+            field: "bio",
+            headerName: "Bio",
+            width: 150,
+            valueFormatter: (val: string) => val || "N/A",
+        },
         {
             field: "imageUrl",
             headerName: "Image",
@@ -37,7 +37,9 @@ const AuthorDataGrid = ({ authors }: AuthorDataGridProps) => {
                     <Link href={params.value} target="_blank">
                         {params.value}
                     </Link>
-                ) : <span>N/A</span>;
+                ) : (
+                    <span>N/A</span>
+                );
             },
         },
         {
@@ -62,7 +64,7 @@ const AuthorDataGrid = ({ authors }: AuthorDataGridProps) => {
                     key={params.id}
                     label="Details"
                     onClick={() => {
-                        console.log(params);
+                        router.push("authors/" + params.id);
                     }}
                 />,
                 <GridActionsCellItem
@@ -70,7 +72,10 @@ const AuthorDataGrid = ({ authors }: AuthorDataGridProps) => {
                     key={params.id}
                     label="Edit"
                     onClick={() => {
-                        console.log(params);
+                        openModal({
+                            formName: "updateAuthor",
+                            data: { author: params.row as Author },
+                        });
                     }}
                     sx={{
                         color: "#2563EB",
@@ -98,7 +103,7 @@ const AuthorDataGrid = ({ authors }: AuthorDataGridProps) => {
     ];
     return (
         <DataGrid
-            rows={rows}
+            rows={authors}
             columns={cols}
             sx={{ height: 500, width: "100%" }}
             autoPageSize
