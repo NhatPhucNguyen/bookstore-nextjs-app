@@ -4,10 +4,10 @@ import FormController from "@/app/components/FormController";
 import { useModalContext } from "@/app/context/ModalContext";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Author } from "@prisma/client";
-import path from "path";
-import React from "react";
 import { useForm } from "react-hook-form";
-import { date, z } from "zod";
+import { z } from "zod";
+import { createAuthor } from "./actions";
+import { useToastContext } from "@/app/context/ToastContext";
 const authorSchema = z.object({
     name: z.string().min(1, {
         message: "Name is required",
@@ -20,9 +20,20 @@ const authorSchema = z.object({
         })
         .optional()
         .or(z.literal("")),
-    dateOfBirth: z.string().date().refine((date) => new Date(date) < new Date(),{
-        message:"Invalid date of birth"
-    }).optional().or(z.literal("")),
+    dateOfBirth: z.coerce
+        .date()
+        .refine((date) => date < new Date(), {
+            message: "Invalid date of birth",
+        })
+        .optional()
+        .or(z.literal(""))
+        .transform((date) => {
+            if (date) {
+                return new Date(date);
+            } else {
+                return null;
+            }
+        }),
     website: z
         .string()
         .url({
@@ -31,18 +42,24 @@ const authorSchema = z.object({
         .optional()
         .or(z.literal("")),
 });
-type AuthorSchema = z.infer<typeof authorSchema>;
 const AuthorForm = () => {
     const {
         register,
         handleSubmit,
-        formState: { errors, isSubmitting },
-    } = useForm<AuthorSchema>({
+        formState: { errors },
+    } = useForm<Author>({
         resolver: zodResolver(authorSchema),
     });
     const { closeModal } = useModalContext();
-    const onSubmit = handleSubmit((data) => {
-        console.log(data);
+    const { toastError, toastSuccess } = useToastContext();
+    const onSubmit = handleSubmit(async (data) => {
+        const response = await createAuthor(data);
+        if (response?.message) {
+            toastError(response.message);
+            return;
+        }
+        toastSuccess("Author added successfully!");
+        return closeModal();
     });
     return (
         <div className="bg-white text-black w-full h-fit m-auto py-2 px-2 sm:px-10 sm:py-4 sm:w-3/4 lg:w-1/2 xl:mt-4">
@@ -56,7 +73,9 @@ const AuthorForm = () => {
                         type="text"
                         {...register("name")}
                         placeholder="Enter author name"
-                        className={`w-full p-2 outline-none rounded-md focus:bg-opacity-50 border "border-gray-300" focus:bg-green-100 ${errors.name && "border-red-500"}`}
+                        className={`w-full p-2 outline-none rounded-md focus:bg-opacity-50 border "border-gray-300" focus:bg-green-100 ${
+                            errors.name && "border-red-500"
+                        }`}
                     />
                 </FormController>
                 <FormController error={errors.bio}>
@@ -66,7 +85,9 @@ const AuthorForm = () => {
                     <textarea
                         {...register("bio")}
                         placeholder="Enter author bio"
-                        className={`w-full p-2 outline-none rounded-md focus:bg-opacity-50 border "border-gray-300" focus:bg-green-100 ${errors.bio && "border-red-500"}`}
+                        className={`w-full p-2 outline-none rounded-md focus:bg-opacity-50 border "border-gray-300" focus:bg-green-100 ${
+                            errors.bio && "border-red-500"
+                        }`}
                         rows={5}
                     />
                 </FormController>
@@ -77,7 +98,9 @@ const AuthorForm = () => {
                     <input
                         type="text"
                         {...register("imageUrl")}
-                        className={`w-full p-2 outline-none rounded-md focus:bg-opacity-50 border "border-gray-300" focus:bg-green-100 ${errors.imageUrl && "border-red-500"}`}
+                        className={`w-full p-2 outline-none rounded-md focus:bg-opacity-50 border "border-gray-300" focus:bg-green-100 ${
+                            errors.imageUrl && "border-red-500"
+                        }`}
                         placeholder="Enter author image URL"
                     />
                 </FormController>
@@ -88,7 +111,9 @@ const AuthorForm = () => {
                     <input
                         type="date"
                         {...register("dateOfBirth")}
-                        className={`w-full p-2 outline-none rounded-md focus:bg-opacity-50 border "border-gray-300" focus:bg-green-100 ${errors.dateOfBirth && "border-red-500"}`}
+                        className={`w-full p-2 outline-none rounded-md focus:bg-opacity-50 border "border-gray-300" focus:bg-green-100 ${
+                            errors.dateOfBirth && "border-red-500"
+                        }`}
                     />
                 </FormController>
                 <FormController error={errors.website}>
@@ -98,7 +123,9 @@ const AuthorForm = () => {
                     <input
                         type="text"
                         {...register("website")}
-                        className={`w-full p-2 outline-none rounded-md focus:bg-opacity-50 border "border-gray-300" focus:bg-green-100 ${errors.website && "border-red-500"}`}
+                        className={`w-full p-2 outline-none rounded-md focus:bg-opacity-50 border "border-gray-300" focus:bg-green-100 ${
+                            errors.website && "border-red-500"
+                        }`}
                         placeholder="Enter author website URL"
                     />
                 </FormController>

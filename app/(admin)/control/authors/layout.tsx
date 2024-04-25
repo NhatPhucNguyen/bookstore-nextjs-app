@@ -1,5 +1,5 @@
-import React, { ReactNode } from 'react'
 import { Metadata } from 'next';
+import { ReactNode } from 'react';
 export const metadata: Metadata = {
     title: "Authors",
     description: "Authors page for BookFinder",
