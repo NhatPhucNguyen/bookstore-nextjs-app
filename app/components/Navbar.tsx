@@ -12,7 +12,7 @@ const Navbar = ({ simple }: NavarProps) => {
             <div className="w-full text-white h-15 flex justify-between align items-center md:py-5">
                 <div className="flex items-center text-xl font-bold">
                     <Image
-                        src={"/bookstore-trans.png"}
+                        src={"/text-logo-trans.png"}
                         alt=""
                         width={50}
                         height={50}

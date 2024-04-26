@@ -1,4 +1,7 @@
 "use client";
+import { useModalContext } from "@/app/context/ModalContext";
+import { useToastContext } from "@/app/context/ToastContext";
+import Link from "@mui/material/Link";
 import {
     DataGrid,
     GridActionsCellItem,
@@ -6,13 +9,14 @@ import {
     GridRowParams,
 } from "@mui/x-data-grid";
 import { Author } from "@prisma/client";
-import { FaEye } from "react-icons/fa6";
-import { MdDelete, MdEditDocument } from "react-icons/md";
-import { deleteAuthor } from "./actions";
-import { useToastContext } from "@/app/context/ToastContext";
-import Link from "@mui/material/Link";
-import { useModalContext } from "@/app/context/ModalContext";
 import { useRouter } from "next/navigation";
+import { MdDelete, MdEditDocument } from "react-icons/md";
+import {
+    DeleteActionCell,
+    EditActionCell,
+    ViewActionCell,
+} from "../components/ActionCells";
+import { deleteAuthor } from "./actions";
 type AuthorDataGridProps = {
     authors: Author[];
 };
@@ -58,41 +62,29 @@ const AuthorDataGrid = ({ authors }: AuthorDataGridProps) => {
             width: 150,
             hideable: false,
             getActions: (params: GridRowParams) => [
-                <GridActionsCellItem
-                    sx={{ color: "#22c55e", ":hover": { color: "#166534" } }}
-                    icon={<FaEye className="text-lg" />}
+                <ViewActionCell
                     key={params.id}
-                    label="Details"
                     onClick={() => {
                         router.push("authors/" + params.id);
                     }}
                 />,
-                <GridActionsCellItem
-                    icon={<MdEditDocument className="text-lg" />}
+                <EditActionCell
                     key={params.id}
-                    label="Edit"
                     onClick={() => {
                         openModal({
                             formName: "updateAuthor",
                             data: { author: params.row as Author },
                         });
                     }}
-                    sx={{
-                        color: "#2563EB",
-                        ":hover": { color: "#1e40af" },
-                    }}
                 />,
-                <GridActionsCellItem
-                    sx={{ color: "#dc2626", ":hover": { color: "#991b1b" } }}
-                    icon={<MdDelete className="text-lg" />}
+                <DeleteActionCell
                     key={params.id}
-                    label="Delete"
                     onClick={async () => {
-                        const response = await deleteAuthor(
+                        const { error } = await deleteAuthor(
                             params.id as string
                         );
-                        if (response?.errorMessage) {
-                            toastError(response.errorMessage);
+                        if (error) {
+                            toastError(error.message);
                             return;
                         }
                         toastSuccess("Author deleted successfully!");
@@ -105,7 +97,7 @@ const AuthorDataGrid = ({ authors }: AuthorDataGridProps) => {
         <DataGrid
             rows={authors}
             columns={cols}
-            sx={{ height: 500, width: "100%" }}
+            sx={{ height: 450, width: "100%" }}
             autoPageSize
             localeText={{ noRowsLabel: "No authors found" }}
         />

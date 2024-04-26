@@ -1,7 +1,6 @@
 "use server";
 
 import prisma from "@/app/lib/prisma";
-import { Button } from "@mui/material";
 import { Author } from "@prisma/client";
 import { revalidatePath } from "next/cache";
 
@@ -22,7 +21,7 @@ export const getAuthors = async () => {
     try {
         const authors = await prisma.author.findMany({
             orderBy: {
-                updatedAt: "asc",
+                updatedAt: "desc",
             },
         });
         return {
@@ -31,6 +30,21 @@ export const getAuthors = async () => {
     } catch (e) {
         return {
             errorMessage: "Failed to get authors!",
+        };
+    }
+};
+
+export const getAuthorById = async (id: string) => {
+    try {
+        const author = await prisma.author.findUnique({
+            where: {
+                id,
+            },
+        });
+        return { author };
+    } catch (e) {
+        return {
+            error: { message: "Failed to get author!" },
         };
     }
 };
@@ -59,9 +73,10 @@ export const deleteAuthor = async (id: string) => {
             },
         });
         revalidatePath("/control/authors");
+        return {success: true};
     } catch (e) {
         return {
-            errorMessage: "Failed to delete author!",
+            error: { message: "Failed to delete author!" },
         };
     }
 };

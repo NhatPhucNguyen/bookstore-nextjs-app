@@ -1,7 +1,7 @@
-import React, { ReactNode } from "react";
-import Sidebar from "./components/Sidebar";
 import ModalContextProvider from "@/app/context/ModalContext";
 import ToastProvider from "@/app/context/ToastContext";
+import { ReactNode } from "react";
+import Sidebar from "./components/Sidebar";
 
 const ControlLayout = ({ children }: { children: ReactNode }) => {
     return (

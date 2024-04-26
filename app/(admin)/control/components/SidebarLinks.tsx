@@ -11,13 +11,15 @@ type LinkItemProps = {
     href: string;
     displayName: string;
     Icon?: IconType;
+    onClick?: () => void;
 };
-const LinkItem = ({ href, displayName, Icon }: LinkItemProps) => {
+const LinkItem = ({ href, displayName, Icon, onClick }: LinkItemProps) => {
     const pathName = usePathname();
     const isActive = pathName === href;
     return (
         <li className="w-full my-2 px-4">
             <Link
+                onClick={onClick}
                 href={href}
                 className={`${
                     isActive ? "bg-active" : ""
@@ -31,18 +33,42 @@ const LinkItem = ({ href, displayName, Icon }: LinkItemProps) => {
         </li>
     );
 };
-const SidebarLinks = () => {
+type SidebarLinksProps = {
+    closeSidebar: () => void;
+};
+const SidebarLinks = ({ closeSidebar }: SidebarLinksProps) => {
     return (
         <ul className="font-bold text-sm">
             <LinkItem
+                onClick={closeSidebar}
                 href={"/control/dashboard"}
                 displayName="Dashboard"
                 Icon={RiDashboard2Line}
             />
-            <LinkItem href={"/control/authors"} displayName="Authors" Icon={IoIosPerson}/>
-            <LinkItem href={"/control/books"} displayName="Books" Icon={IoBookSharp}/>
-            <LinkItem href={"/control/genres"} displayName="Genre" Icon={MdCategory}/>
-            <LinkItem href={"/control/orders"} displayName="Orders" Icon={FaMoneyBillTrendUp}/>
+            <LinkItem
+                onClick={closeSidebar}
+                href={"/control/authors"}
+                displayName="Authors"
+                Icon={IoIosPerson}
+            />
+            <LinkItem
+                onClick={closeSidebar}
+                href={"/control/books"}
+                displayName="Books"
+                Icon={IoBookSharp}
+            />
+            <LinkItem
+                onClick={closeSidebar}
+                href={"/control/subjects"}
+                displayName="Subjects"
+                Icon={MdCategory}
+            />
+            <LinkItem
+                onClick={closeSidebar}
+                href={"/control/orders"}
+                displayName="Orders"
+                Icon={FaMoneyBillTrendUp}
+            />
         </ul>
     );
 };

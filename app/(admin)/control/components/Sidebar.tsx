@@ -6,6 +6,9 @@ import SidebarLinks from "./SidebarLinks";
 
 const Sidebar = () => {
     const [open, setOpen] = useState(false);
+    const closeSidebar = () => {
+        setOpen(false);
+    };
     return (
         <>
             <button
@@ -38,16 +41,16 @@ const Sidebar = () => {
             >
                 <section className="border-b-2 pb-3">
                     <Image
-                        src={"/bookstore-trans.png"}
+                        src={"/text-logo-trans.png"}
                         alt=""
-                        width={70}
-                        height={70}
+                        width={100}
+                        height={100}
                         className="mx-auto"
                         priority
                     />
                     <h1 className="font-bold text-center">BookFinder</h1>
                 </section>
-                <SidebarLinks />
+                <SidebarLinks closeSidebar={closeSidebar}/>
                 <button
                     type="button"
                     className="block w-20 py-2 bg-active mt-auto mx-auto mb-4 rounded-md hover:bg-blueHover font-bold"

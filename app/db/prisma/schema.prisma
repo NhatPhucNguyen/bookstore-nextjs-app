@@ -21,6 +21,7 @@ model Author{
 model Subject{
     id String @id @default(uuid())
     name String
+    description String?
     books Book[]
     createdAt DateTime @default(now())
     updatedAt DateTime @updatedAt

@@ -1,7 +1,6 @@
 import { Suspense } from "react";
 import AuthorHeading from "./AuthorHeading";
 import AuthorList from "./AuthorList";
-import Loading from "./loading";
 import { mainTitle, metadata } from "@/app/layout";
 metadata.title = mainTitle + " | Authors";
 const Page = () => {
@@ -9,9 +8,7 @@ const Page = () => {
         <div className="sm:mt-10 pl-2">
             <AuthorHeading />
             <div className="mt-2">
-                <Suspense fallback={<Loading />}>
-                    <AuthorList />
-                </Suspense>
+                <AuthorList />
             </div>
         </div>
     );

@@ -2,10 +2,17 @@
 import { ReactNode, createContext, useContext, useState } from "react";
 import Backdrop from "../components/Backdrop";
 import AuthorForm from "../(admin)/control/authors/AuthorForm";
-import { Author } from "@prisma/client";
-type FormValues = "addAuthor" | "updateAuthor" | undefined;
+import { Author, Subject } from "@prisma/client";
+import SubjectForm from "../(admin)/control/subjects/SubjectForm";
+type FormValues =
+    | "addAuthor"
+    | "updateAuthor"
+    | "addSubject"
+    | "updateSubject"
+    | undefined;
 type DataValues = {
     author?: Author;
+    subject?: Subject;
 };
 type ModalOptions = {
     open: boolean;
@@ -13,7 +20,7 @@ type ModalOptions = {
     data?: DataValues;
 };
 type ModalContextType = {
-    openModal: (options:FormRenderOptions) => void;
+    openModal: (options: FormRenderOptions) => void;
     closeModal: () => void;
 };
 type FormRenderOptions = Pick<ModalOptions, "formName" | "data">;
@@ -29,6 +36,10 @@ const formRender = ({ formName, data }: FormRenderOptions) => {
                 );
             }
             return <AuthorForm author={data?.author} />;
+        case "addSubject":
+            return <SubjectForm />;
+        case "updateSubject":
+            return <SubjectForm subject={data?.subject} />;
         default:
             return null;
     }
