@@ -2,17 +2,22 @@
 import { ReactNode, createContext, useContext, useState } from "react";
 import Backdrop from "../components/Backdrop";
 import AuthorForm from "../(admin)/control/authors/AuthorForm";
-import { Author, Subject } from "@prisma/client";
+import { Author, Book, Subject } from "@prisma/client";
 import SubjectForm from "../(admin)/control/subjects/SubjectForm";
+import BookForm from "../(admin)/control/books/BookForm";
+import { BookDetails } from "../(admin)/control/books/BookDataGrid";
 type FormValues =
     | "addAuthor"
     | "updateAuthor"
     | "addSubject"
     | "updateSubject"
+    | "addBook"
+    | "updateBook"
     | undefined;
 type DataValues = {
     author?: Author;
     subject?: Subject;
+    book?: BookDetails;
 };
 type ModalOptions = {
     open: boolean;
@@ -40,6 +45,10 @@ const formRender = ({ formName, data }: FormRenderOptions) => {
             return <SubjectForm />;
         case "updateSubject":
             return <SubjectForm subject={data?.subject} />;
+        case "addBook":
+            return <BookForm />;
+        case "updateBook":
+            return <BookForm book={data?.book} />;
         default:
             return null;
     }

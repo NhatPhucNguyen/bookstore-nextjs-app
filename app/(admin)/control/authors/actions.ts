@@ -17,19 +17,31 @@ export const createAuthor = async (author: Author) => {
     }
 };
 
-export const getAuthors = async () => {
+export const getAuthors = async (name?: string) => {
     try {
         const authors = await prisma.author.findMany({
             orderBy: {
                 updatedAt: "desc",
             },
+            include: {
+                _count: {
+                    select: {
+                        books: true,
+                    },
+                },
+            },
+            where: {
+                name: {
+                    contains: name,
+                },
+            },
         });
         return {
-            authors: authors as Author[],
+            authors: authors,
         };
     } catch (e) {
         return {
-            errorMessage: "Failed to get authors!",
+            error: { message: "Failed to get authors!" },
         };
     }
 };
@@ -73,7 +85,7 @@ export const deleteAuthor = async (id: string) => {
             },
         });
         revalidatePath("/control/authors");
-        return {success: true};
+        return { success: true };
     } catch (e) {
         return {
             error: { message: "Failed to delete author!" },

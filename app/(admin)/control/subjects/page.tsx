@@ -7,7 +7,7 @@ const Subjects = async () => {
     return (
         <div>
             <SubjectHeading />
-            {error && <div>{error.errorMessage}</div>}
+            {error && <div>{error.message}</div>}
             {subjects && (
                 <div className="mt-2">
                     <SubjectDataGrid subjects={subjects} />

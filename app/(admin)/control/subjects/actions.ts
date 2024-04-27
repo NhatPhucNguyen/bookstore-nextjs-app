@@ -19,15 +19,27 @@ export const createSubject = async (subject: Subject) => {
     }
 };
 
-export const getSubjects = async () => {
+export const getSubjects = async (name?: string) => {
     try {
         const subjects = await prisma.subject.findMany({
             orderBy: { updatedAt: "desc" },
+            include: {
+                _count: {
+                    select: {
+                        books: true,
+                    },
+                },
+            },
+            where: {
+                name: {
+                    contains: name,
+                },
+            },
         });
         return { subjects };
     } catch (e) {
         return {
-            error: { errorMessage: "Failed to get subjects" },
+            error: { message: "Failed to get subjects" },
         };
     }
 };

@@ -19,7 +19,7 @@ model Author{
     updatedAt DateTime @updatedAt
 }
 model Subject{
-    id String @id @default(uuid())
+    id String @id @default(uuid()) @db.Uuid
     name String
     description String?
     books Book[]
@@ -27,12 +27,12 @@ model Subject{
     updatedAt DateTime @updatedAt
 }
 model Book{
-    isbn String @id @unique
+    isbn String @id @db.VarChar(13)
     title String
     description String?
-    coverUrl String?
+    imageUrl String?
     publishedDate DateTime?
-    stock Int @default(0)
+    quantity Int @default(0)
     price Float
     rating Int @default(0)
     discount Float @default(0)

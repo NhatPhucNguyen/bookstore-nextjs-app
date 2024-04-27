@@ -6,16 +6,27 @@ import {
     GridColDef,
     GridRowParams,
 } from "@mui/x-data-grid";
-import { Subject } from "@prisma/client";
+import { Prisma, Subject } from "@prisma/client";
 import { MdEditDocument } from "react-icons/md";
 import { DeleteActionCell, EditActionCell } from "../components/ActionCells";
 import { deleteSubject } from "./actions";
 import { useToastContext } from "@/app/context/ToastContext";
-const SubjectDataGrid = ({ subjects }: { subjects: Subject[] }) => {
+type SubjectDataGridProps = {
+    subjects: Prisma.SubjectGetPayload<{
+        include: { _count: { select: { books: true } } };
+    }>[];
+};
+const SubjectDataGrid = ({ subjects }: SubjectDataGridProps) => {
     const { openModal } = useModalContext();
     const { toastError, toastSuccess } = useToastContext();
     const cols: GridColDef[] = [
         { field: "name", headerName: "Name", hideable: false, width: 150 },
+        {
+            field: "_count",
+            headerName: "Books",
+            width: 100,
+            valueGetter: (params: { books: number }) => params.books,
+        },
         { field: "description", headerName: "Description", flex: 1 },
         {
             field: "updatedAt",
@@ -30,7 +41,7 @@ const SubjectDataGrid = ({ subjects }: { subjects: Subject[] }) => {
             field: "id",
             type: "actions",
             headerName: "Actions",
-            width: 150,
+            width:100,
             hideable: false,
             resizable: false,
             getActions: (params: GridRowParams) => [
@@ -63,7 +74,7 @@ const SubjectDataGrid = ({ subjects }: { subjects: Subject[] }) => {
             rows={subjects}
             columns={cols}
             localeText={{ noRowsLabel: "No subjects found" }}
-            sx={{ height: 450, width: "100%" }}
+            sx={{ height: 500, width: "100%" }}
         ></DataGrid>
     );
 };

@@ -1,5 +1,4 @@
 "use client";
-import "react-toastify/dist/ReactToastify.css";
 import { Bounce, ToastContainer, toast } from "react-toastify";
 import { createContext, useContext } from "react";
 

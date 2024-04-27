@@ -85,7 +85,7 @@ const AuthorForm = ({ author }: AuthorFormProps) => {
     });
     return (
         <div className="bg-white text-black w-full h-fit m-auto py-2 px-2 sm:px-10 sm:py-4 sm:w-3/4 lg:w-1/2 xl:mt-4">
-            <h2 className="font-bold text-xl">Add Author</h2>
+            <h2 className="font-bold text-2xl">{author ? "Edit" : "Add"} Author</h2>
             <form onSubmit={onSubmit}>
                 <FormController error={errors.name}>
                     <label htmlFor="name" className="font-bold">
@@ -95,9 +95,7 @@ const AuthorForm = ({ author }: AuthorFormProps) => {
                         type="text"
                         {...register("name")}
                         placeholder="Enter author name"
-                        className={`w-full p-2 outline-none rounded-md focus:bg-opacity-50 border "border-gray-300" focus:bg-green-100 ${
-                            errors.name && "border-red-500"
-                        }`}
+                        className={`w-full p-2 outline-none rounded-md focus:bg-opacity-50 focus:bg-green-100`}
                     />
                 </FormController>
                 <FormController error={errors.bio}>
@@ -107,9 +105,7 @@ const AuthorForm = ({ author }: AuthorFormProps) => {
                     <textarea
                         {...register("bio")}
                         placeholder="Enter author bio"
-                        className={`w-full p-2 outline-none rounded-md focus:bg-opacity-50 border "border-gray-300" focus:bg-green-100 ${
-                            errors.bio && "border-red-500"
-                        }`}
+                        className={`w-full p-2 outline-none rounded-md focus:bg-opacity-50 focus:bg-green-100`}
                         rows={5}
                     />
                 </FormController>
@@ -120,9 +116,7 @@ const AuthorForm = ({ author }: AuthorFormProps) => {
                     <input
                         type="text"
                         {...register("imageUrl")}
-                        className={`w-full p-2 outline-none rounded-md focus:bg-opacity-50 border "border-gray-300" focus:bg-green-100 ${
-                            errors.imageUrl && "border-red-500"
-                        }`}
+                        className={`w-full p-2 outline-none rounded-md focus:bg-opacity-50 focus:bg-green-100`}
                         placeholder="Enter author image URL"
                     />
                 </FormController>
@@ -133,9 +127,7 @@ const AuthorForm = ({ author }: AuthorFormProps) => {
                     <input
                         type="date"
                         {...register("dateOfBirth")}
-                        className={`w-full p-2 outline-none rounded-md focus:bg-opacity-50 border "border-gray-300" focus:bg-green-100 ${
-                            errors.dateOfBirth && "border-red-500"
-                        }`}
+                        className={`w-full p-2 outline-none rounded-md focus:bg-opacity-50 focus:bg-green-100`}
                         defaultValue={
                             author?.dateOfBirth?.toISOString().split("T")[0]
                         }
@@ -148,9 +140,7 @@ const AuthorForm = ({ author }: AuthorFormProps) => {
                     <input
                         type="text"
                         {...register("website")}
-                        className={`w-full p-2 outline-none rounded-md focus:bg-opacity-50 border "border-gray-300" focus:bg-green-100 ${
-                            errors.website && "border-red-500"
-                        }`}
+                        className={`w-full p-2 outline-none rounded-md focus:bg-opacity-50 focus:bg-green-100`}
                         placeholder="Enter author website URL"
                     />
                 </FormController>

@@ -8,7 +8,7 @@ const Backdrop = ({ handleClose, className, children }: BackdropProps) => {
     const ref = useRef<HTMLDivElement>(null);
     return (
         <div
-            className={`fixed w-full h-screen bg-gray-400 bg-opacity-70 z-10 ${className}`}
+            className={`fixed w-full h-screen bg-gray-900 bg-opacity-70 z-10 ${className}`}
             ref={ref}
             onClick={(e:MouseEvent<HTMLDivElement>) => {
                 if(e.target === ref.current){

@@ -46,7 +46,7 @@ const SubjectForm = ({ subject }: { subject?: Subject }) => {
     };
     return (
         <div className="bg-white text-black w-full h-fit m-auto py-2 px-2 sm:px-10 sm:py-4 sm:w-3/4 lg:w-1/2 mt-[5%]">
-            <h2 className="font-bold text-xl">Add Subject</h2>
+            <h2 className="font-bold text-2xl">{subject ? "Edit" : "Add"} Subject</h2>
             <form onSubmit={handleSubmit(onSubmit)}>
                 <FormController error={errors.name}>
                     <label htmlFor="name" className="font-bold">
@@ -56,9 +56,7 @@ const SubjectForm = ({ subject }: { subject?: Subject }) => {
                         {...register("name")}
                         type="text"
                         placeholder="Enter subject name"
-                        className={`w-full p-2 outline-none rounded-md focus:bg-opacity-50 border "border-gray-300" focus:bg-green-100 ${
-                            errors.name && "border-red-500"
-                        }`}
+                        className={`w-full p-2 outline-none rounded-md focus:bg-opacity-50 focus:bg-green-100`}
                     />
                 </FormController>
                 <FormController error={errors.description}>
@@ -68,9 +66,7 @@ const SubjectForm = ({ subject }: { subject?: Subject }) => {
                     <textarea
                         {...register("description")}
                         placeholder="Enter subject description"
-                        className={`w-full p-2 outline-none rounded-md focus:bg-opacity-50 border "border-gray-300" focus:bg-green-100 ${
-                            errors.description && "border-red-500"
-                        }`}
+                        className={`w-full p-2 outline-none rounded-md focus:bg-opacity-50 focus:bg-green-100`}
                         rows={5}
                     />
                 </FormController>

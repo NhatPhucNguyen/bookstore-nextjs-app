@@ -1,9 +1,9 @@
 import React, { ReactNode } from "react";
-import { FieldError } from "react-hook-form";
+import { FieldError, Merge } from "react-hook-form";
 type FormControllerProps = {
     children: ReactNode;
     className?: string;
-    error?: FieldError;
+    error?: FieldError | Merge<FieldError, (FieldError | undefined)[]>;
 };
 const FormController = ({
     children,
@@ -11,9 +11,15 @@ const FormController = ({
     error,
 }: FormControllerProps) => {
     return (
-        <div className={`w-full mb-2 ${className}`}>
+        <div
+            className={`w-full mb-2 [&_:is(input,textarea)]:border [&_:is(input,textarea)]:border-gray-300 ${
+                error && "[&_:is(input,textarea)]:border-red-500"
+            } ${className}`}
+        >
             {children}
-            {error && <span className="block text-red-500 ml-1">{error.message}</span>}
+            {error && (
+                <span className="block text-red-500 ml-1">{error.message}</span>
+            )}
         </div>
     );
 };

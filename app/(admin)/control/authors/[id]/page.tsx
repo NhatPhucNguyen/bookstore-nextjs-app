@@ -4,6 +4,7 @@ import { getAuthorById } from "../actions";
 import AuthorImage from "./AuthorImage";
 import { Link } from "@mui/material";
 import { BackButton } from "@/app/components/Button";
+metadata.title = `${mainTitle} | Author Details`;
 const AuthorDetails = async ({ params }: { params: { id: string } }) => {
     const { id } = params;
     const { author, error } = await getAuthorById(id);
@@ -13,7 +14,6 @@ const AuthorDetails = async ({ params }: { params: { id: string } }) => {
     if (!author) {
         return <div>No author found</div>;
     }
-    metadata.title = mainTitle + " | " + author.name;
     return (
         <div className="sm:mt-10">
             <Heading title={"Author: " + author.name}>
@@ -39,5 +39,4 @@ const AuthorDetails = async ({ params }: { params: { id: string } }) => {
         </div>
     );
 };
-
 export default AuthorDetails;

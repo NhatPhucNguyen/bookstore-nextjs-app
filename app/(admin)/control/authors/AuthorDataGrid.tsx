@@ -2,15 +2,9 @@
 import { useModalContext } from "@/app/context/ModalContext";
 import { useToastContext } from "@/app/context/ToastContext";
 import Link from "@mui/material/Link";
-import {
-    DataGrid,
-    GridActionsCellItem,
-    GridColDef,
-    GridRowParams,
-} from "@mui/x-data-grid";
-import { Author } from "@prisma/client";
+import { DataGrid, GridColDef, GridRowParams } from "@mui/x-data-grid";
+import { Author, Prisma } from "@prisma/client";
 import { useRouter } from "next/navigation";
-import { MdDelete, MdEditDocument } from "react-icons/md";
 import {
     DeleteActionCell,
     EditActionCell,
@@ -18,7 +12,9 @@ import {
 } from "../components/ActionCells";
 import { deleteAuthor } from "./actions";
 type AuthorDataGridProps = {
-    authors: Author[];
+    authors: Prisma.AuthorGetPayload<{
+        include: { _count: { select: { books: true } } };
+    }>[];
 };
 const AuthorDataGrid = ({ authors }: AuthorDataGridProps) => {
     const { toastSuccess, toastError } = useToastContext();
@@ -56,11 +52,18 @@ const AuthorDataGrid = ({ authors }: AuthorDataGridProps) => {
                 new Date(val).toLocaleDateString(),
         },
         {
+            field: "_count",
+            headerName: "Books",
+            width: 100,
+            valueGetter: (params: { books: number }) => params.books,
+        },
+        {
             field: "actions",
             headerName: "Actions",
             type: "actions",
-            width: 150,
+            width:150,
             hideable: false,
+            resizable:false,
             getActions: (params: GridRowParams) => [
                 <ViewActionCell
                     key={params.id}
@@ -97,7 +100,7 @@ const AuthorDataGrid = ({ authors }: AuthorDataGridProps) => {
         <DataGrid
             rows={authors}
             columns={cols}
-            sx={{ height: 450, width: "100%" }}
+            sx={{ height: 500, width: "100%" }}
             autoPageSize
             localeText={{ noRowsLabel: "No authors found" }}
         />
