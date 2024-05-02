@@ -1,8 +1,6 @@
-import React from "react";
-import Heading from "../components/Heading";
+import BookDataGrid from "./BookDataGrid";
 import BookHeading from "./BookHeading";
 import { getAllBooks } from "./actions";
-import BookDataGrid from "./BookDataGrid";
 
 const BooksPage = async () => {
     const { books, error } = await getAllBooks();

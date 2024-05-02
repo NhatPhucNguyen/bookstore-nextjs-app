@@ -2,16 +2,21 @@
 import { DataGrid, GridColDef, GridRowParams } from "@mui/x-data-grid";
 import { Author, Book, Prisma, Subject } from "@prisma/client";
 import React from "react";
-import { DeleteActionCell, EditActionCell } from "../components/ActionCells";
+import {
+    DeleteActionCell,
+    EditActionCell,
+    ViewActionCell,
+} from "../components/ActionCells";
 import { useToastContext } from "@/app/context/ToastContext";
 import { deleteBook } from "./actions";
 import { Link } from "@mui/material";
 import { useModalContext } from "@/app/context/ModalContext";
+import { useRouter } from "next/navigation";
 export type BookDetails = Prisma.BookGetPayload<{
     include: {
         subjects: true;
         authors: true;
-    };
+    }
 }>;
 type BookDataGridProps = {
     books: BookDetails[];
@@ -19,6 +24,7 @@ type BookDataGridProps = {
 const BookDataGrid = ({ books }: BookDataGridProps) => {
     const { toastError, toastSuccess } = useToastContext();
     const { openModal } = useModalContext();
+    const router = useRouter();
     const cols: GridColDef[] = [
         { field: "isbn", headerName: "ISBN", width: 150, hideable: false },
         { field: "title", headerName: "Title", width: 150, hideable: false },
@@ -81,7 +87,7 @@ const BookDataGrid = ({ books }: BookDataGridProps) => {
             }) => {
                 return (
                     <>
-                        <span>{row.price}</span>
+                        <span>${row.price}</span>
                         {" | "}
                         <span className="text-green-500">
                             ${(row.price * (100 - row.discount)) / 100}
@@ -98,6 +104,12 @@ const BookDataGrid = ({ books }: BookDataGridProps) => {
             width: 150,
             hideable: false,
             getActions: (params: GridRowParams) => [
+                <ViewActionCell
+                    key={params.id}
+                    onClick={() => {
+                        router.push(`/control/books/${params.id}`);
+                    }}
+                />,
                 <EditActionCell
                     key={params.id}
                     onClick={async () => {

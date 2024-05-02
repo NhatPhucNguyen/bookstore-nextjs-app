@@ -19,9 +19,9 @@ const AuthorDetails = async ({ params }: { params: { id: string } }) => {
             <Heading title={"Author: " + author.name}>
                 <BackButton href="/control/authors" />
             </Heading>
-            <section className="md:grid grid-cols-2 mt-4">
+            <section className="md:grid grid-cols-3 mt-4">
                 <AuthorImage author={author} />
-                <section className="p-1">
+                <section className="p-1 col-span-2">
                     <h2 className="font-bold text-lg">About</h2>
                     <p className="min-h-60 whitespace-pre-wrap">
                         {author.bio || "Not updated yet"}

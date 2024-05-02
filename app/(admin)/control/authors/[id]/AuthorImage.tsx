@@ -12,7 +12,7 @@ const AuthorImage = ({ author }: { author: Author }) => {
     const { toastError, toastSuccess } = useToastContext();
     const router = useRouter();
     return (
-        <section className="md:sticky top-2 h-fit w-full">
+        <section className="md:sticky top-2 h-fit w-full float-start">
             <figure>
                 <Image
                     unoptimized
@@ -33,7 +33,6 @@ const AuthorImage = ({ author }: { author: Author }) => {
                         marginRight: "auto",
                         display: "block",
                     }}
-                    className="rounded-full"
                 />
                 <figcaption className="text-center font-bold italic text-md mt-2 ">
                     {author.name}

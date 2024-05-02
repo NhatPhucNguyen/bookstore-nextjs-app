@@ -54,6 +54,9 @@ export const getAllBooks = async () => {
                 authors: true,
                 subjects: true,
             },
+            orderBy: {
+                updatedAt: "desc",
+            },
         });
         return { books };
     } catch (e) {
@@ -89,7 +92,7 @@ export const updateBook = async (isbn: string, bookInput: BookInput) => {
             .map((author) => author.id)
             .filter((id) => !bookInput.authors.includes(id))
             .map((item) => ({ id: item }));
-        const newBook = await prisma.book.update({
+        await prisma.book.update({
             where: { isbn },
             data: {
                 title: bookInput.title,
@@ -119,6 +122,25 @@ export const updateBook = async (isbn: string, bookInput: BookInput) => {
         console.log(e);
         return {
             error: { message: "Failed to update book" },
+        };
+    }
+};
+
+export const getBookByIsbn = async (isbn: string) => {
+    try {
+        const book = await prisma.book.findFirstOrThrow({
+            where: {
+                isbn,
+            },
+            include: {
+                authors: true,
+                subjects: true,
+            },
+        });
+        return { book };
+    } catch (e) {
+        return {
+            error: { message: "Failed to get book" },
         };
     }
 };
