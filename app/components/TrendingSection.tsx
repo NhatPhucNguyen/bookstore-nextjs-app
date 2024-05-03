@@ -22,7 +22,7 @@ const TrendingSection = async () => {
                                 className="mb-5 sm:mb-0 shadow-lg bg-gray-600 bg-opacity-20 px-1 py-4 sm:h-[32rem]"
                                 key={book.isbn}
                             >
-                                <BookCard book={book} />
+                                <BookCard book={book}/>
                             </div>
                         ))}
                 </div>

@@ -1,15 +1,16 @@
 "use client";
-import React, { ReactNode } from "react";
+import React, { ReactNode, useEffect, useRef, useState } from "react";
 
 const RevealOnScroll = ({ children }: { children: ReactNode }) => {
-    const [isVisible, setIsVisible] = React.useState(false);
-    const domRef = React.useRef<HTMLDivElement>(null);
-    React.useEffect(() => {
+    const [isVisible, setIsVisible] = useState(false);
+    const domRef = useRef<HTMLDivElement>(null);
+    useEffect(() => {
         const observer = new IntersectionObserver((entries) => {
             entries.forEach((entry) => setIsVisible(entry.isIntersecting));
         });
-        observer.observe(domRef.current!);
-        return () => observer.unobserve(domRef.current!);
+        const current = domRef.current;
+        observer.observe(current!);
+        return () => observer.unobserve(current!);
     }, []);
     return (
         <div
