@@ -13,9 +13,14 @@ import { useEffect, useState } from "react";
 import { getSubjects } from "../subjects/actions";
 import { createBook, updateBook } from "./actions";
 const bookSchema = z.object({
-    isbn: z.string().length(13, {
-        message: "ISBN must be 13 characters",
-    }),
+    isbn: z
+        .string()
+        .min(1, {
+            message: "ISBN/ASIN is required",
+        })
+        .max(13, {
+            message: "ISBN/ASIN must be 13 characters",
+        }),
     title: z.string().min(1, {
         message: "Title is required",
     }),
@@ -37,7 +42,9 @@ const bookSchema = z.object({
         .number({
             message: "Price is required",
         })
-        .multipleOf(0.05)
+        .multipleOf(0.01, {
+            message: "Price must be in cents",
+        })
         .min(0, {
             message: "Price must be greater than 0",
         }),
@@ -148,7 +155,7 @@ const BookForm = ({
             >
                 <FormController error={errors.isbn}>
                     <label htmlFor="isbn" className="font-bold">
-                        ISBN
+                        ISBN/ASIN
                     </label>
                     <input
                         {...register("isbn")}

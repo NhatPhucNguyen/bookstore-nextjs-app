@@ -70,7 +70,7 @@ const BookDetailsPage = async ({ params }: { params: { isbn: string } }) => {
                                 />
                                 <TableDetailRow
                                     field="Original Price"
-                                    value={book.price}
+                                    value={`$${book.price.toFixed(2)}`}
                                 />
                                 <TableDetailRow
                                     field="Discount"
@@ -79,8 +79,8 @@ const BookDetailsPage = async ({ params }: { params: { isbn: string } }) => {
                                 <TableDetailRow
                                     field="Final Price"
                                     value={`$${
-                                        (book.price * (100 - book.discount)) /
-                                        100
+                                        ((book.price * (100 - book.discount)) /
+                                        100).toFixed(2)
                                     }`}
                                 />
                                 <TableDetailRow

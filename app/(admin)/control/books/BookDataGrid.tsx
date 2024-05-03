@@ -16,7 +16,7 @@ export type BookDetails = Prisma.BookGetPayload<{
     include: {
         subjects: true;
         authors: true;
-    }
+    };
 }>;
 type BookDataGridProps = {
     books: BookDetails[];
@@ -42,9 +42,10 @@ const BookDataGrid = ({ books }: BookDataGridProps) => {
             width: 150,
         },
         {
-            field: "coverUrl",
+            field: "imageUrl",
             headerName: "Cover Image URL",
             renderCell: (params) => {
+                console.log(params);
                 return params.value ? (
                     <Link href={params.value} target="_blank">
                         {params.value}
@@ -87,10 +88,10 @@ const BookDataGrid = ({ books }: BookDataGridProps) => {
             }) => {
                 return (
                     <>
-                        <span>${row.price}</span>
+                        <span>${row.price.toFixed(2)}</span>
                         {" | "}
                         <span className="text-green-500">
-                            ${(row.price * (100 - row.discount)) / 100}
+                            ${((row.price * (100 - row.discount)) / 100).toFixed(2)}
                         </span>
                     </>
                 );

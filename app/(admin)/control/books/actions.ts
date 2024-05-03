@@ -22,7 +22,7 @@ export const createBook = async (bookInput: BookInput) => {
             data: {
                 title: bookInput.title,
                 description: bookInput.description,
-                isbn: bookInput.isbn,
+                isbn: bookInput.isbn.trim(),
                 publishedDate: bookInput.publishedDate,
                 price: bookInput.price,
                 imageUrl: bookInput.imageUrl,
@@ -47,7 +47,7 @@ export const createBook = async (bookInput: BookInput) => {
     }
 };
 
-export const getAllBooks = async () => {
+export const getAllBooks = async (quantity?: number) => {
     try {
         const books = await prisma.book.findMany({
             include: {
@@ -57,6 +57,7 @@ export const getAllBooks = async () => {
             orderBy: {
                 updatedAt: "desc",
             },
+            take: quantity,
         });
         return { books };
     } catch (e) {
@@ -139,6 +140,7 @@ export const getBookByIsbn = async (isbn: string) => {
         });
         return { book };
     } catch (e) {
+        console.log(e);
         return {
             error: { message: "Failed to get book" },
         };

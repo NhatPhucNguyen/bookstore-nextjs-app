@@ -1,5 +1,6 @@
 import Jumbotron from "./components/Jumbotron";
 import Navbar from "./components/Navbar";
+import TrendingSection from "./components/TrendingSection";
 
 export default function Home() {
     return (
@@ -7,8 +8,9 @@ export default function Home() {
             <header>
                 <Navbar />
             </header>
-            <main className="md:px-2">
+            <main className="md:px-2 bg-main-background">
                 <Jumbotron />
+                <TrendingSection />
             </main>
         </>
     );

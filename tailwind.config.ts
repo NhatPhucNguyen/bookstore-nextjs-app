@@ -13,12 +13,13 @@ const config: Config = {
                 "gradient-conic":
                     "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
                 "main-background":
-                    "linear-gradient(to right, #ad5389, #3c1053)",
+                    "linear-gradient(45deg, #ff3198 0%, #2a0086 100%)",
             },
             colors: {
                 secondary: "#9747FF",
                 active: "#509CDB",
                 blueHover:"#2671B1",
+                myPurple:"#8D28AD"
             },
             keyframes: {
                 "fade-in-down": {
