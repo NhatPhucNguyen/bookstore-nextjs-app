@@ -46,8 +46,11 @@ export const createBook = async (bookInput: BookInput) => {
         };
     }
 };
-
-export const getAllBooks = async (quantity?: number) => {
+type GetBookOptions = {
+    quantity?: number;
+    rating?: "asc" | "desc";
+};
+export const getAllBooks = async ({ quantity, rating }: GetBookOptions) => {
     try {
         const books = await prisma.book.findMany({
             include: {
@@ -55,7 +58,8 @@ export const getAllBooks = async (quantity?: number) => {
                 subjects: true,
             },
             orderBy: {
-                updatedAt: "desc",
+                updatedAt: !rating ? "desc" : undefined,
+                rating: rating,
             },
             take: quantity,
         });

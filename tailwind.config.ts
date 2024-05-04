@@ -14,12 +14,14 @@ const config: Config = {
                     "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
                 "main-background":
                     "linear-gradient(45deg, #ff3198 0%, #2a0086 100%)",
+                "subject-background":
+                    "linear-gradient(180deg, #cf99ff 14% 14%, #d1d1d1 50%, #dbb3ff 100% 83%)",
             },
             colors: {
                 secondary: "#9747FF",
                 active: "#509CDB",
-                blueHover:"#2671B1",
-                myPurple:"#8D28AD"
+                blueHover: "#2671B1",
+                myPurple: "#8D28AD",
             },
             keyframes: {
                 "fade-in-down": {
@@ -52,7 +54,7 @@ const config: Config = {
                         transform: "translateX(0)",
                     },
                 },
-                "sidebar":{
+                sidebar: {
                     "0%": {
                         opacity: "1",
                         transform: "translateX(-100px)",
@@ -61,13 +63,13 @@ const config: Config = {
                         opacity: "1",
                         transform: "translateX(0)",
                     },
-                }
+                },
             },
             animation: {
                 "fade-in-down": "fade-in-down 0.7s ease-out",
                 "fade-left": "fade-left 0.7s ease-out",
                 "fade-right": "fade-right 0.7s ease-out",
-                "sidebar": "sidebar 0.2s linear",
+                sidebar: "sidebar 0.2s linear",
             },
         },
     },

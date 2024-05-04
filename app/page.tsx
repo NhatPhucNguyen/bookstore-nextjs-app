@@ -6,6 +6,7 @@ import { MdOutlinePayment, MdOutlineSecurity } from "react-icons/md";
 import { FaMedal } from "react-icons/fa6";
 import RevealOnScroll from "./components/RevealOnScroll";
 import BestSellersSection from "./components/BestSellersSection";
+import SubjectsSection from "./components/SubjectsSection";
 
 export default function Home() {
     return (
@@ -37,6 +38,7 @@ export default function Home() {
                     </section>
                 </RevealOnScroll>
                 <BestSellersSection />
+                <SubjectsSection />
             </main>
         </>
     );
