@@ -18,7 +18,7 @@ const BookCard = ({ book }: BookCardProps) => {
                     : book.title}
             </div>
             <div className="text-black text-sm">
-                <div className="text-center mt-3 font-bold italic">
+                <div className="text-center mt-3 italic">
                     {book.authors[0].name}
                 </div>
             </div>

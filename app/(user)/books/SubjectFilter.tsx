@@ -10,6 +10,9 @@ const SubjectFilter = ({ subjects }: { subjects: Subject[] }) => {
     const searchParams = useSearchParams();
     const pathname = usePathname();
     const { replace } = useRouter();
+    const foundSubject = subjects.find(
+        (subject) => subject.id === searchParams.get("subject")
+    );
     return (
         <section>
             {/* Mobile filter */}
@@ -23,6 +26,20 @@ const SubjectFilter = ({ subjects }: { subjects: Subject[] }) => {
                     .concat({ label: "All", value: "all" })}
                 className="text-black mt-2 md:hidden"
                 id="subject-filter"
+                onChange={(option) => {
+                    const params = new URLSearchParams(searchParams);
+                    if (option === null || option.value === "all") {
+                        params.delete("subject");
+                    } else {
+                        params.set("subject", option.value);
+                    }
+                    replace(`${pathname}?${params.toString()}`);
+                }}
+                defaultValue={
+                    foundSubject === undefined
+                        ? { label: "All", value: "all" }
+                        : { label: foundSubject.name, value: foundSubject.id }
+                }
             />
             {/* Desktop filter */}
             <ul className="hidden md:block pl-4 [&>li]:mt-2 [&>li]:hover:cursor-pointer [&>li]:">

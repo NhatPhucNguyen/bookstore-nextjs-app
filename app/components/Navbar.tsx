@@ -1,10 +1,27 @@
 "use client";
 import Image from "next/image";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { useState } from "react";
 type NavarProps = {
     simple?: boolean;
 };
+
+const MobileNavLink = ({ href, name }: { href: string; name: string }) => {
+    const pathname = usePathname();
+    const isCurrent = pathname === href;
+    return (
+        <Link
+            href={href}
+            className={`${
+                isCurrent ? "bg-gray-800 text-white" : "text-gray-300"
+            } block rounded-md px-3 py-2 text-base font-medium hover:bg-gray-700 hover:text-white`}
+        >
+            {name}
+        </Link>
+    );
+};
+
 const Navbar = ({ simple }: NavarProps) => {
     const [openDropdown, setOpenDropdown] = useState(false);
     return (
@@ -21,7 +38,7 @@ const Navbar = ({ simple }: NavarProps) => {
                 </div>
                 <ul className="hidden md:flex flex-row gap-4 mr-6 font-semibold">
                     <li>
-                        <Link href={"/"} className="hover:text-secondary">
+                        <Link href={"/"} className={`hover:text-secondary`}>
                             Home
                         </Link>
                     </li>
@@ -127,38 +144,13 @@ const Navbar = ({ simple }: NavarProps) => {
                 id="mobile-menu"
             >
                 <div className="space-y-1 px-2 pb-3 pt-2">
-                    <Link
-                        href="/"
-                        className="bg-gray-800 text-white block rounded-md px-3 py-2 text-base font-medium"
-                    >
-                        Home
-                    </Link>
+                    <MobileNavLink href="/" name="Home" />
                     {!simple && (
                         <>
-                            <Link
-                                href="/books"
-                                className="text-gray-300 hover:bg-gray-700 hover:text-white block rounded-md px-3 py-2 text-base font-medium"
-                            >
-                                Books
-                            </Link>
-                            <Link
-                                href="#"
-                                className="text-gray-300 hover:bg-gray-700 hover:text-white block rounded-md px-3 py-2 text-base font-medium"
-                            >
-                                Trending
-                            </Link>
-                            <Link
-                                href="#"
-                                className="text-gray-300 hover:bg-gray-700 hover:text-white block rounded-md px-3 py-2 text-base font-medium"
-                            >
-                                About Us
-                            </Link>
-                            <Link
-                                href="/login"
-                                className="text-gray-300 hover:bg-gray-700 hover:text-white block rounded-md px-3 py-2 text-base font-medium"
-                            >
-                                Login
-                            </Link>
+                            <MobileNavLink href="/books" name="Books" />
+                            <MobileNavLink href="/trending" name="Trending" />
+                            <MobileNavLink href="/aboutUs" name="About Us" />
+                            <MobileNavLink href="/login" name="Login" />
                         </>
                     )}
 
