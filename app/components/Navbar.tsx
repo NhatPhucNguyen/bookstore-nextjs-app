@@ -29,7 +29,7 @@ const Navbar = ({ simple }: NavarProps) => {
                         <>
                             <li>
                                 <Link
-                                    href={"/"}
+                                    href={"/books"}
                                     className="hover:text-secondary"
                                 >
                                     Books
@@ -123,7 +123,7 @@ const Navbar = ({ simple }: NavarProps) => {
             <div
                 className={`${
                     openDropdown ? "absolute" : "hidden"
-                }  md:hidden w-full right-0 bg-gray-900`}
+                }  md:hidden w-full right-0 bg-gray-900 z-50`}
                 id="mobile-menu"
             >
                 <div className="space-y-1 px-2 pb-3 pt-2">
@@ -136,7 +136,7 @@ const Navbar = ({ simple }: NavarProps) => {
                     {!simple && (
                         <>
                             <Link
-                                href="#"
+                                href="/books"
                                 className="text-gray-300 hover:bg-gray-700 hover:text-white block rounded-md px-3 py-2 text-base font-medium"
                             >
                                 Books

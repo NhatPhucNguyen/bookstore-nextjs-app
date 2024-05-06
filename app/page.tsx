@@ -37,8 +37,12 @@ export default function Home() {
                         </div>
                     </section>
                 </RevealOnScroll>
-                <BestSellersSection />
-                <SubjectsSection />
+                <RevealOnScroll>
+                    <BestSellersSection />
+                </RevealOnScroll>
+                <RevealOnScroll>
+                    <SubjectsSection />
+                </RevealOnScroll>
             </main>
         </>
     );

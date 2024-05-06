@@ -1,5 +1,5 @@
 import React, { ReactNode } from "react";
-import FormController from "../components/FormController";
+import FormController from "../../components/FormController";
 
 const Login = () => {
     return (

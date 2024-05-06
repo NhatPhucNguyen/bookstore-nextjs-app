@@ -6,11 +6,19 @@ const RevealOnScroll = ({ children }: { children: ReactNode }) => {
     const domRef = useRef<HTMLDivElement>(null);
     useEffect(() => {
         const observer = new IntersectionObserver((entries) => {
-            entries.forEach((entry) => setIsVisible(entry.isIntersecting));
+            entries.forEach((entry) => {
+                if (entry.isIntersecting) {
+                    setIsVisible(entry.isIntersecting);
+                }
+            });
         });
         const current = domRef.current;
         observer.observe(current!);
-        return () => observer.unobserve(current!);
+        return () => {
+            if (current) {
+                observer.unobserve(current!);
+            }
+        };
     }, []);
     return (
         <div

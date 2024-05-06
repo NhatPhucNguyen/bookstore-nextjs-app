@@ -13,7 +13,7 @@ const BestSellersSection = async () => {
                 <h2 className="text-xl inline-block">Best Sellers</h2>
                 <span className="text-sm">Scroll for more {">"}</span>
             </div>
-            <div className="flex flex-row mt-2 w-full overflow-x-auto gap-4 py-2">
+            <div className="flex flex-row mt-2 w-full overflow-x-auto gap-4 py-2 ">
                 {books?.map((book) => {
                     return (
                         <div
