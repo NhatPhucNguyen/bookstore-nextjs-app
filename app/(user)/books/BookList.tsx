@@ -9,7 +9,7 @@ const BookList = async ({ subject }: { subject?: string }) => {
                 return (
                     <div
                         key={book.isbn}
-                        className="mt-4 sm:mt-0 bg-white bg-opacity-10 py-4"
+                        className="mt-4 sm:mt-0 bg-white bg-opacity-10 py-4 md:hover:scale-105 transition-transform"
                     >
                         <BookCard book={book} />
                     </div>

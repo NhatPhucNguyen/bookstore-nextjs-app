@@ -5,10 +5,14 @@ const BookCardImage = ({
     imageUrl,
     rating,
     className,
+    height,
+    width,
 }: {
     imageUrl: string | null;
     rating?: number;
     className?: string;
+    height?: number;
+    width?: number;
 }) => {
     return (
         <figure
@@ -33,8 +37,8 @@ const BookCardImage = ({
                     e.currentTarget.src = "/unknown-book.png";
                 }}
                 style={{
-                    width: "250px",
-                    height: "250px",
+                    width: width ? `${width}px` : "250px",
+                    height: height ? `${height}px` : "250px",
                     marginLeft: "auto",
                     marginRight: "auto",
                     display: "block",

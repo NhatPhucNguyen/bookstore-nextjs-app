@@ -6,7 +6,7 @@ import RevealOnScroll from "./RevealOnScroll";
 const TrendingSection = async () => {
     const { books, error } = await getAllBooks({ quantity: 5 });
     return (
-        <section>
+        <section className="px-2">
             <h2 className="mt-10 text-2xl text-center font-bold">
                 Trending this week
             </h2>
@@ -19,7 +19,7 @@ const TrendingSection = async () => {
                     {books &&
                         books.map((book) => (
                             <div
-                                className="mb-5 sm:mb-0 shadow-lg bg-gray-600 bg-opacity-20 px-1 py-4 sm:h-[32rem]"
+                                className="mb-5 sm:mb-0 shadow-lg bg-gray-600 bg-opacity-20 px-1 py-4 sm:h-[32rem] md:hover:scale-105 transition-transform"
                                 key={book.isbn}
                             >
                                 <BookCard book={book} />

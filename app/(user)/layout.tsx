@@ -7,7 +7,7 @@ const UserLayout = ({ children }: { children: ReactNode }) => {
             <header>
                 <Navbar />
             </header>
-            <main className="bg-main-background min-h-screen">{children}</main>
+            <main className="bg-main-background min-h-screen w-full">{children}</main>
         </>
     );
 };

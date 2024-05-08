@@ -1,6 +1,7 @@
 import React from "react";
 import { BookDetails } from "../../(admin)/control/books/BookDataGrid";
 import BookCardImage from "./BookCardImage";
+import Link from "next/link";
 type BookCardProps = {
     book: BookDetails;
 };
@@ -8,7 +9,7 @@ const BOOK_TITLE_MAX_LENGTH = 35;
 const BookCard = ({ book }: BookCardProps) => {
     return (
         <div className="w-full min-h-[28rem] sm:h-full sm:flex flex-col">
-            <BookCardImage imageUrl={book.imageUrl} rating={book.rating}/>
+            <BookCardImage imageUrl={book.imageUrl} rating={book.rating} />
             <div className="text-white text-center mt-3 font-bold">
                 {book.subjects[0].name}
             </div>
@@ -22,10 +23,28 @@ const BookCard = ({ book }: BookCardProps) => {
                     {book.authors[0].name}
                 </div>
             </div>
-            <div className="min-w-40 max-w-60 h-8 border border-white mx-auto rounded-md flex justify-center items-center gap-5 mt-10 font-bold hover:bg-myPurple sm:mt-auto sm:py-5">
-                {book.discount > 0 && <span>${((book.price * (100 - book.discount)) / 100).toFixed(2)}</span>}
-                <span className={book.discount > 0 ?"text-black line-through" : "text-white"}>${book.price.toFixed(2)}</span>
-            </div>
+            <Link
+                href={`/books/${book.isbn}`}
+                className="min-w-40 max-w-60 h-8 border border-white mx-auto rounded-md flex justify-center items-center gap-5 mt-10 font-bold hover:bg-myPurple hover:cursor-pointer sm:mt-auto sm:py-5"
+            >
+                {book.discount > 0 && (
+                    <span>
+                        $
+                        {((book.price * (100 - book.discount)) / 100).toFixed(
+                            2
+                        )}
+                    </span>
+                )}
+                <span
+                    className={
+                        book.discount > 0
+                            ? "text-black line-through"
+                            : "text-white"
+                    }
+                >
+                    ${book.price.toFixed(2)}
+                </span>
+            </Link>
         </div>
     );
 };
