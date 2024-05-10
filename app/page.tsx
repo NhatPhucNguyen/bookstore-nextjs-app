@@ -7,12 +7,14 @@ import { FaMedal } from "react-icons/fa6";
 import RevealOnScroll from "./components/RevealOnScroll";
 import BestSellersSection from "./components/BestSellersSection";
 import SubjectsSection from "./components/SubjectsSection";
+import { getUser } from "./lib/session";
 
-export default function Home() {
+export default async function Home() {
+    const user = await getUser();
     return (
         <>
             <header>
-                <Navbar />
+                <Navbar isAuthenticated={user ? true : false} />
             </header>
             <main className="bg-main-background">
                 <Jumbotron />

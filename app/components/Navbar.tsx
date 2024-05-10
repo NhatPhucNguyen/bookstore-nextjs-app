@@ -1,10 +1,13 @@
 "use client";
+import { log } from "console";
 import Image from "next/image";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { redirect, usePathname } from "next/navigation";
 import { useState } from "react";
+import { logout } from "../(auth)/actions";
 type NavarProps = {
     simple?: boolean;
+    isAuthenticated?: boolean;
 };
 
 const MobileNavLink = ({ href, name }: { href: string; name: string }) => {
@@ -22,7 +25,7 @@ const MobileNavLink = ({ href, name }: { href: string; name: string }) => {
     );
 };
 
-const Navbar = ({ simple }: NavarProps) => {
+const Navbar = ({ simple, isAuthenticated }: NavarProps) => {
     const [openDropdown, setOpenDropdown] = useState(false);
     return (
         <>
@@ -68,24 +71,38 @@ const Navbar = ({ simple }: NavarProps) => {
                                     About Us
                                 </Link>
                             </li>
-                            <li>
-                                <Link
-                                    href={"/login"}
-                                    className="hover:text-secondary"
-                                >
-                                    Login
-                                </Link>
-                            </li>
+                            {!isAuthenticated && (
+                                <li>
+                                    <Link
+                                        href={"/login"}
+                                        className="hover:text-secondary"
+                                    >
+                                        Login
+                                    </Link>
+                                </li>
+                            )}
                         </>
                     )}
 
                     <li>
-                        <Link
-                            href={"/register"}
-                            className="bg-secondary text-white px-2 py-3 rounded-md hover:bg-white hover:text-secondary"
-                        >
-                            Create account
-                        </Link>
+                        {isAuthenticated ? (
+                            <Link
+                                href="/login"
+                                className="bg-secondary text-white px-2 py-3 rounded-md hover:bg-white hover:text-secondary"
+                                onClick={async () => {
+                                    await logout();
+                                }}
+                            >
+                                Logout
+                            </Link>
+                        ) : (
+                            <Link
+                                href={"/register"}
+                                className="bg-secondary text-white px-2 py-3 rounded-md hover:bg-white hover:text-secondary"
+                            >
+                                Create account
+                            </Link>
+                        )}
                     </li>
                 </ul>
                 <button
@@ -150,16 +167,30 @@ const Navbar = ({ simple }: NavarProps) => {
                             <MobileNavLink href="/books" name="Books" />
                             <MobileNavLink href="/trending" name="Trending" />
                             <MobileNavLink href="/aboutUs" name="About Us" />
-                            <MobileNavLink href="/login" name="Login" />
+                            {!isAuthenticated && (
+                                <MobileNavLink href="/login" name="Login" />
+                            )}
                         </>
                     )}
 
-                    <Link
-                        href="/register"
-                        className="text-white bg-secondary hover:bg-gray-700 hover:text-white block rounded-md px-3 py-2 text-base font-medium"
-                    >
-                        Create Account
-                    </Link>
+                    {isAuthenticated ? (
+                        <Link
+                            href=""
+                            className="text-white bg-secondary hover:bg-gray-700 hover:text-white block rounded-md px-3 py-2 text-base font-medium"
+                            onClick={async () => {
+                                await logout();
+                            }}
+                        >
+                            Logout
+                        </Link>
+                    ) : (
+                        <Link
+                            href="/register"
+                            className="text-white bg-secondary hover:bg-gray-700 hover:text-white block rounded-md px-3 py-2 text-base font-medium"
+                        >
+                            Create Account
+                        </Link>
+                    )}
                 </div>
             </div>
         </>
