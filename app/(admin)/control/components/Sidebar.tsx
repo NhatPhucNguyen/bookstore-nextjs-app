@@ -3,12 +3,15 @@ import React, { useState } from "react";
 import Backdrop from "../../../components/Backdrop";
 import Image from "next/image";
 import SidebarLinks from "./SidebarLinks";
+import { logout } from "@/app/(auth)/actions";
+import { useRouter } from "next/navigation";
 
 const Sidebar = () => {
     const [open, setOpen] = useState(false);
     const closeSidebar = () => {
         setOpen(false);
     };
+    const router = useRouter();
     return (
         <>
             <button
@@ -54,6 +57,10 @@ const Sidebar = () => {
                 <button
                     type="button"
                     className="block w-20 py-2 bg-active mt-auto mx-auto mb-4 rounded-md hover:bg-blueHover font-bold"
+                    onClick={async ()=>{
+                        await logout();
+                        router.push("/login");
+                    }}
                 >
                     Logout
                 </button>

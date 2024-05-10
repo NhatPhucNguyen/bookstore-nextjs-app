@@ -1,32 +1,66 @@
+"use client";
 import Link from "next/link";
 import FormController from "../../components/FormController";
-
+import { z } from "zod";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { login } from "../actions";
+import { useToastContext } from "@/app/context/ToastContext";
+import { useRouter } from "next/navigation";
+const LoginSchema = z.object({
+    email: z.string().email({ message: "Invalid email address" }).trim(),
+    password: z.string().min(1, { message: "Password is required" }),
+});
+type LoginFormData = z.infer<typeof LoginSchema>;
 const Login = () => {
+    const {
+        register,
+        handleSubmit,
+        formState: { errors },
+    } = useForm<LoginFormData>({
+        resolver: zodResolver(LoginSchema),
+    });
+    const { toastError } = useToastContext();
+    const router = useRouter();
+    const onSubmit = async (data: LoginFormData) => {
+        const { error, role } = await login(data.email, data.password);
+        if (error) {
+            return toastError(error.message);
+        }
+        if (role === "ADMIN") {
+            return router.push("/control/dashboard");
+        }
+        return router.push("/books");
+    };
     return (
         <div className="w-full px-2 md:w-1/2 py-16 mx-auto animate-fade-in-down">
-            <form className="w-full bg-black bg-opacity-50 p-4 rounded-2xl md:p-8">
+            <form
+                className="w-full bg-black bg-opacity-50 p-4 rounded-2xl md:p-8"
+                onSubmit={handleSubmit(onSubmit)}
+                noValidate
+            >
                 <h1 className="text-center font-bold text-2xl">BookFinder</h1>
                 <h2 className="text-center font-semibold text-lg">
                     Log into your account
                 </h2>
-                <FormController>
+                <FormController error={errors.email}>
                     <label htmlFor="email" className="font-bold">
                         Email:
                     </label>
                     <input
                         type="email"
-                        id="email"
+                        {...register("email")}
                         placeholder="Enter your email"
                         className="w-full p-2 border-none outline-none rounded-md text-white bg-secondary placeholder:text-gray-300 focus:bg-opacity-50"
                     />
                 </FormController>
-                <FormController>
+                <FormController error={errors.password}>
                     <label htmlFor="password" className="font-bold">
                         Password:
                     </label>
                     <input
                         type="password"
-                        id="password"
+                        {...register("password")}
                         placeholder="Enter your password"
                         className="w-full p-2 border-none outline-none rounded-md text-white bg-secondary placeholder:text-gray-300 focus:bg-opacity-50"
                     />
@@ -49,7 +83,10 @@ const Login = () => {
                     <span className="block">Keep me logged in</span>
                 </div>
                 <FormController className="flex justify-center mt-4">
-                    <button className="w-52 py-1 bg-secondary rounded-md hover:bg-white hover:text-secondary font-bold">
+                    <button
+                        className="w-52 py-1 bg-secondary rounded-md hover:bg-white hover:text-secondary font-bold"
+                        type="submit"
+                    >
                         Login
                     </button>
                 </FormController>

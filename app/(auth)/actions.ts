@@ -57,7 +57,7 @@ export const login = async (email: string, password: string) => {
         if (!passwordMatch) {
             return {
                 error: {
-                    message: "Invalid password",
+                    message: "Password is incorrect",
                 },
             };
         }
@@ -65,6 +65,7 @@ export const login = async (email: string, password: string) => {
             id: user.id,
             role: user.role,
         });
+        return { success: true,role:user.role };
     } catch (error) {
         return {
             error: {

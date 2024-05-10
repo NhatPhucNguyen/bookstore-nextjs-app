@@ -35,9 +35,12 @@ const RegisterForm = () => {
         resolver: zodResolver(SignUpSchema),
     });
     const { toastError } = useToastContext();
+    const [loading, setLoading] = useState(false);
     const onSubmit = async (data: SignUpFormData) => {
+        setLoading(true);
         const res = await signup(data.email, data.password);
         if (res) {
+            setLoading(false);
             toastError(res.error.message);
         }
     };
@@ -50,7 +53,7 @@ const RegisterForm = () => {
             >
                 <h1 className="text-center font-bold text-2xl">BookFinder</h1>
                 <h2 className="text-center font-semibold text-lg">
-                    Create an account
+                    {loading ? "Loading" : "Create an account"}
                 </h2>
                 <FormController error={errors.email}>
                     <label htmlFor="email" className="font-bold">
