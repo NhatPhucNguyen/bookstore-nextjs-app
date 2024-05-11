@@ -16,6 +16,7 @@ export type BookDetails = Prisma.BookGetPayload<{
     include: {
         subjects: true;
         authors: true;
+        reviews: true;
     };
 }>;
 type BookDataGridProps = {
@@ -91,7 +92,10 @@ const BookDataGrid = ({ books }: BookDataGridProps) => {
                         <span>${row.price.toFixed(2)}</span>
                         {" | "}
                         <span className="text-green-500">
-                            ${((row.price * (100 - row.discount)) / 100).toFixed(2)}
+                            $
+                            {((row.price * (100 - row.discount)) / 100).toFixed(
+                                2
+                            )}
                         </span>
                     </>
                 );

@@ -3,6 +3,7 @@
 import prisma from "@/app/lib/prisma";
 import { BookInput } from "./BookForm";
 import { revalidatePath } from "next/cache";
+import { calculateRatingAvg } from "@/app/utils/calculateRatingAvg";
 
 export const createBook = async (bookInput: BookInput) => {
     try {
@@ -57,10 +58,10 @@ export const getAllBooks = async (options?: GetBookOptions) => {
             include: {
                 authors: true,
                 subjects: true,
+                reviews: true,
             },
             orderBy: {
                 updatedAt: !options?.rating ? "desc" : undefined,
-                rating: options?.rating,
             },
             take: options?.quantity,
             where: {
@@ -73,7 +74,14 @@ export const getAllBooks = async (options?: GetBookOptions) => {
                 },
             },
         });
-        return { books };
+        const newBooks = books.map((book) => {
+            const rating = calculateRatingAvg(book.reviews);
+            return {
+                ...book,
+                rating,
+            };
+        });
+        return { books: newBooks };
     } catch (e) {
         return {
             error: { message: "Failed to get books" },
@@ -150,6 +158,7 @@ export const getBookByIsbn = async (isbn: string) => {
             include: {
                 authors: true,
                 subjects: true,
+                reviews: true,
             },
         });
         return { book };

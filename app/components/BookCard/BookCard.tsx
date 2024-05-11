@@ -2,6 +2,7 @@ import React from "react";
 import { BookDetails } from "../../(admin)/control/books/BookDataGrid";
 import BookCardImage from "./BookCardImage";
 import Link from "next/link";
+import { calculateRatingAvg } from "@/app/utils/calculateRatingAvg";
 type BookCardProps = {
     book: BookDetails;
 };
@@ -9,7 +10,7 @@ const BOOK_TITLE_MAX_LENGTH = 35;
 const BookCard = ({ book }: BookCardProps) => {
     return (
         <div className="w-full min-h-[28rem] sm:h-full sm:flex flex-col">
-            <BookCardImage imageUrl={book.imageUrl} rating={book.rating} />
+            <BookCardImage imageUrl={book.imageUrl} rating={calculateRatingAvg(book.reviews)} />
             <div className="text-white text-center mt-3 font-bold">
                 {book.subjects[0].name}
             </div>

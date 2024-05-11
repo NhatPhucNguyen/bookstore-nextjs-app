@@ -2,6 +2,7 @@ import React from "react";
 import BookCardImage from "./BookCardImage";
 import { BookDetails } from "@/app/(admin)/control/books/BookDataGrid";
 import { FaStar } from "react-icons/fa6";
+import { calculateRatingAvg } from '../../utils/calculateRatingAvg';
 const BOOK_TITLE_MAX_LENGTH = 35;
 const SellingBookCard = ({ book }: { book: BookDetails }) => {
     return (
@@ -15,7 +16,7 @@ const SellingBookCard = ({ book }: { book: BookDetails }) => {
                     <div className="bg-yellow-300 text-orange-500 rounded-md text-center font-bold flex justify-center items-center gap-2 text-xl w-full mt-1">
                         <FaStar className="inline-block" />
                         <span className="inline-block">
-                            {book.rating.toFixed(1)}
+                            {calculateRatingAvg(book.reviews).toFixed(1)}
                         </span>
                     </div>
                     <div className="text-black font-bold mt-3">

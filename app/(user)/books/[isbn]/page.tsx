@@ -6,10 +6,12 @@ import { mainTitle } from "@/app/layout";
 import { Paper, Table, TableBody, TableContainer } from "@mui/material";
 import RatingController from "./RatingController";
 import RelatedBooks from "./RelatedBooks";
+import { getUserRating } from "./actions";
 const MAX_TITLE_LENGTH = 40;
 const BookDetails = async ({ params }: { params: { isbn: string } }) => {
     const { book } = await getBookByIsbn(params.isbn);
-    if (!book) return <div>Book not found</div>;
+    const rating = await getUserRating(params.isbn);
+    if (!book) return <div>Book not found</div>; 
     return (
         <>
             <SubHeading
@@ -37,10 +39,10 @@ const BookDetails = async ({ params }: { params: { isbn: string } }) => {
                             </div>
                             <div className="md:flex items-center gap-3">
                                 <div>
-                                    <RatingController />
+                                    <RatingController isbn={book.isbn} rating={rating || 0}/>
                                 </div>
                                 <div className="border text-gray-800 text-center rounded-md mt-2 md:w-32 md:py-1">
-                                    0 Reviews
+                                    {book.reviews.length} Reviews
                                 </div>
                             </div>
                         </section>

@@ -13,7 +13,7 @@ const RelatedBooks = async ({ book }: { book: BookDetails }) => {
             {books?.map((book) => {
                 return (
                     <div key={book.isbn}>
-                        <SellingBookCard book={book} />
+                        <SellingBookCard book={book as BookDetails} />
                     </div>
                 );
             })}

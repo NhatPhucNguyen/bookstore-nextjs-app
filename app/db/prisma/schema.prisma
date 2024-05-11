@@ -34,7 +34,7 @@ model Book{
     publishedDate DateTime?
     quantity Int @default(0)
     price Float
-    rating Int @default(0)
+    reviews Review[]
     discount Float @default(0)
     authors Author[]
     subjects Subject[]
@@ -49,4 +49,15 @@ model User{
     role String @default("USER")
     createdAt DateTime @default(now())
     updatedAt DateTime @updatedAt
+    reviews Review[]
+}
+
+model Review{
+    id Int @id @default(autoincrement())
+    rating Int
+    user User @relation(fields: [userId], references: [id])
+    userId String @db.Uuid
+    updatedAt DateTime @updatedAt
+    book Book @relation(fields: [bookIsbn], references: [isbn])
+    bookIsbn String
 }
