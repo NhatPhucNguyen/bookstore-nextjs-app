@@ -10,15 +10,21 @@ const BOOK_TITLE_MAX_LENGTH = 35;
 const BookCard = ({ book }: BookCardProps) => {
     return (
         <div className="w-full min-h-[28rem] sm:h-full sm:flex flex-col">
-            <BookCardImage imageUrl={book.imageUrl} rating={calculateRatingAvg(book.reviews)} />
-            <div className="text-white text-center mt-3 font-bold">
+            <BookCardImage
+                imageUrl={book.imageUrl}
+                rating={calculateRatingAvg(book.reviews)}
+            />
+            <Link href={`/books?subject=${book.subjects[0].id}`} className="text-white text-center mt-3 font-bold hover:underline">
                 {book.subjects[0].name}
-            </div>
-            <div className="text-black text-center mt-3 font-bold text-wrap">
+            </Link>
+            <Link
+                href={`/books/${book.isbn}`}
+                className="text-black text-center mt-3 font-bold text-wrap hover:underline"
+            >
                 {book.title.length > BOOK_TITLE_MAX_LENGTH
                     ? book.title.slice(0, BOOK_TITLE_MAX_LENGTH) + "..."
                     : book.title}
-            </div>
+            </Link>
             <div className="text-black text-sm">
                 <div className="text-center mt-3 italic">
                     {book.authors[0].name}

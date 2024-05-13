@@ -14,7 +14,7 @@ const SubjectsSection = async () => {
                 {subjects &&
                     subjects.map((subject) => (
                         <Link
-                            href={"#"}
+                            href={`/books?subject=${subject.id}`}
                             key={subject.id}
                             className="bg-subject-background text-black font-bold text-center p-2 rounded-lg text-wrap w-full h-14 text-sm flex items-center justify-center hover:bg-main-background hover:text-white"
                         >

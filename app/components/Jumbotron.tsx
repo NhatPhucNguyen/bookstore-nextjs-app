@@ -10,12 +10,12 @@ const Jumbotron = () => {
                     Find your new books in BookFinder
                 </h1>
                 <p className="mt-5">
-                    <Link href={"#"} className="underline ">
+                    <Link href={"/books"} className="underline ">
                         Not Sure What To Read Next?
                     </Link>
                     <br></br>Explore our collections of books with the best price !
                 </p>
-                <button type="button" className="block mt-5 bg-secondary p-3 rounded-md font-bold shadow-xl hover:bg-white hover:text-secondary">Go to collection </button>
+                <Link href={"/books"} type="button" className="block mt-5 bg-secondary p-3 rounded-md font-bold shadow-xl hover:bg-white hover:text-secondary w-fit">Go to collection </Link>
             </div>
             <div className="max-w-xl min-w-28 w-3/5 animate-fade-left">
                 <Image
