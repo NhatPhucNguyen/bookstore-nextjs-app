@@ -1,7 +1,8 @@
 import { Suspense } from "react";
 import AuthorHeading from "./AuthorHeading";
 import AuthorList from "./AuthorList";
-import { mainTitle, metadata } from "@/app/layout";
+import { metadata } from "@/app/layout";
+import { mainTitle } from "@/app/utils/globalVariables";
 metadata.title = mainTitle + " | Authors";
 const Page = () => {
     return (

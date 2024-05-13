@@ -2,16 +2,16 @@ import TableDetailRow from "@/app/(admin)/control/books/[isbn]/TableDetailRow";
 import { getBookByIsbn } from "@/app/(admin)/control/books/actions";
 import BookCardImage from "@/app/components/BookCard/BookCardImage";
 import SubHeading from "@/app/components/SubHeading";
-import { mainTitle } from "@/app/layout";
 import { Paper, Table, TableBody, TableContainer } from "@mui/material";
 import RatingController from "./RatingController";
 import RelatedBooks from "./RelatedBooks";
 import { getUserRating } from "./actions";
+import { mainTitle } from "@/app/utils/globalVariables";
 const MAX_TITLE_LENGTH = 40;
 const BookDetails = async ({ params }: { params: { isbn: string } }) => {
     const { book } = await getBookByIsbn(params.isbn);
     const rating = await getUserRating(params.isbn);
-    if (!book) return <div>Book not found</div>; 
+    if (!book) return <div>Book not found</div>;
     return (
         <>
             <SubHeading
@@ -39,7 +39,10 @@ const BookDetails = async ({ params }: { params: { isbn: string } }) => {
                             </div>
                             <div className="md:flex items-center gap-3">
                                 <div>
-                                    <RatingController isbn={book.isbn} rating={rating || 0}/>
+                                    <RatingController
+                                        isbn={book.isbn}
+                                        rating={rating || 0}
+                                    />
                                 </div>
                                 <div className="border text-gray-800 text-center rounded-md mt-2 md:w-32 md:py-1">
                                     {book.reviews.length} Reviews
@@ -54,22 +57,29 @@ const BookDetails = async ({ params }: { params: { isbn: string } }) => {
                                 {book.description || "No description available"}
                             </p>
                             <div className="py-2 text-center md:text-left">
-                                {book.discount > 0 && (
-                                    <span className="text-green-400 font-bold text-2xl">
-                                        $
-                                        {(
-                                            (book.price *
-                                                (100 - book.discount)) /
-                                            100
-                                        ).toFixed(2)}
-                                    </span>
-                                )}
-                                <span className="ml-8 text-black line-through">
-                                    ${book.price}
-                                </span>
-                                <span className="ml-4 bg-yellow-600 px-2 py-1 rounded-md">
+                                {book.discount > 0 ? (
+                                    <>
+                                        <span className="text-green-400 font-bold text-2xl">
+                                            $
+                                            {(
+                                                (book.price *
+                                                    (100 - book.discount)) /
+                                                100
+                                            ).toFixed(2)}
+                                        </span>
+                                        <span className="ml-8 text-black line-through">
+                                            ${book.price}
+                                        </span>
+                                        <span className="ml-4 bg-yellow-600 px-2 py-1 rounded-md">
                                     {book.discount}%
-                                </span>
+                                        </span>
+                                    </>
+                                ) : <>
+                                    <span className="text-green-400 font-bold text-2xl">
+                                        ${book.price}
+                                    </span>
+                                </>}
+                                
                             </div>
                         </section>
                     </div>

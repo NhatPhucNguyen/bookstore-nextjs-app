@@ -1,5 +1,5 @@
 import { BackButton } from "@/app/components/Button";
-import { mainTitle, metadata } from "@/app/layout";
+import { metadata } from "@/app/layout";
 import Heading from "../../components/Heading";
 import { getBookByIsbn } from "../actions";
 import BookCoverImage from "./BookCoverImage";
@@ -14,6 +14,7 @@ import {
 } from "@mui/material";
 import { Fragment } from "react";
 import TableDetailRow from "./TableDetailRow";
+import { mainTitle } from "@/app/utils/globalVariables";
 metadata.title = mainTitle + " | Book Details";
 const BookDetailsPage = async ({ params }: { params: { isbn: string } }) => {
     const { book, error } = await getBookByIsbn(params.isbn);

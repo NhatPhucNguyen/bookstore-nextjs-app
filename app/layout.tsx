@@ -2,8 +2,8 @@ import { AppRouterCacheProvider } from "@mui/material-nextjs/v14-appRouter";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
+import { mainTitle } from "./utils/globalVariables";
 const inter = Inter({ subsets: ["latin"] });
-export const mainTitle = "BookFinder";
 export const metadata: Metadata = {
     title: mainTitle,
     description: `${mainTitle} - Find your favorite books here!`,

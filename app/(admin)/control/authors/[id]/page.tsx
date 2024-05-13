@@ -1,9 +1,10 @@
-import { mainTitle, metadata } from "@/app/layout";
+import { metadata } from "@/app/layout";
 import Heading from "../../components/Heading";
 import { getAuthorById } from "../actions";
 import AuthorImage from "./AuthorImage";
 import { Link } from "@mui/material";
 import { BackButton } from "@/app/components/Button";
+import { mainTitle } from "@/app/utils/globalVariables";
 metadata.title = `${mainTitle} | Author Details`;
 const AuthorDetails = async ({ params }: { params: { id: string } }) => {
     const { id } = params;

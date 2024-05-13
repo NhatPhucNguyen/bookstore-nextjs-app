@@ -1,4 +1,5 @@
-import { mainTitle, metadata } from '@/app/layout';
+import { metadata } from '@/app/layout';
+import { mainTitle } from '@/app/utils/globalVariables';
 metadata.title = mainTitle + ' | Dashboard';
 const DashBoard = () => {
   return (

@@ -4,7 +4,7 @@ import React from "react";
 
 const Jumbotron = () => {
     return (
-        <div className="text-white flex flex-row gap-4 justify-center items-center w-full p-5 rounded-3xl mt-3 bg-black bg-opacity-25">
+        <div className="text-white flex flex-row gap-4 justify-center items-center w-full p-5 rounded-3xl bg-black bg-opacity-25">
             <div className="animate-fade-right">
                 <h1 className="font-bold text-3xl">
                     Find your new books in BookFinder
