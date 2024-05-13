@@ -7,6 +7,8 @@ import RatingController from "./RatingController";
 import RelatedBooks from "./RelatedBooks";
 import { getUserRating } from "./actions";
 import { mainTitle } from "@/app/utils/globalVariables";
+import { calculateRatingAvg } from "@/app/utils/calculateRatingAvg";
+import RatingCount from "./RatingCount";
 const MAX_TITLE_LENGTH = 40;
 const BookDetails = async ({ params }: { params: { isbn: string } }) => {
     const { book } = await getBookByIsbn(params.isbn);
@@ -15,7 +17,10 @@ const BookDetails = async ({ params }: { params: { isbn: string } }) => {
     return (
         <>
             <SubHeading
-                parent={["Home", "Books"]}
+                parent={[
+                    { name: "Home", href: "/" },
+                    { name: "Books", href: "/books" },
+                ]}
                 current={
                     book.title.length > MAX_TITLE_LENGTH
                         ? book.title.slice(0, MAX_TITLE_LENGTH - 3) + "..."
@@ -71,15 +76,16 @@ const BookDetails = async ({ params }: { params: { isbn: string } }) => {
                                             ${book.price}
                                         </span>
                                         <span className="ml-4 bg-yellow-600 px-2 py-1 rounded-md">
-                                    {book.discount}%
+                                            {book.discount}%
                                         </span>
                                     </>
-                                ) : <>
-                                    <span className="text-green-400 font-bold text-2xl">
-                                        ${book.price}
-                                    </span>
-                                </>}
-                                
+                                ) : (
+                                    <>
+                                        <span className="text-green-400 font-bold text-2xl">
+                                            ${book.price}
+                                        </span>
+                                    </>
+                                )}
                             </div>
                         </section>
                     </div>
@@ -87,43 +93,73 @@ const BookDetails = async ({ params }: { params: { isbn: string } }) => {
 
                 <section className="mt-2 md:grid grid-cols-2 gap-2">
                     <div>
-                        <h2 className="font-bold text-lg mb-2">Details</h2>
+                        <div>
+                            <h2 className="font-bold text-lg mb-2">Details</h2>
 
-                        <TableContainer component={Paper}>
-                            <Table>
-                                <TableBody>
-                                    <TableDetailRow
-                                        field="ISBN"
-                                        value={book.isbn}
+                            <TableContainer component={Paper}>
+                                <Table>
+                                    <TableBody>
+                                        <TableDetailRow
+                                            field="ISBN"
+                                            value={book.isbn}
+                                        />
+                                        <TableDetailRow
+                                            field="Title"
+                                            value={book.title}
+                                        />
+                                        <TableDetailRow
+                                            field="Authors"
+                                            value={book.authors
+                                                .map((author) => author.name)
+                                                .join(", ")}
+                                        />
+                                        <TableDetailRow
+                                            field="Subjects"
+                                            value={book.subjects
+                                                .map((subject) => subject.name)
+                                                .join(", ")}
+                                        />
+                                        <TableDetailRow
+                                            field="Published Date"
+                                            value={book.publishedDate?.toLocaleDateString()}
+                                        />
+                                        <TableDetailRow
+                                            field="Quantity"
+                                            value={book.quantity}
+                                        />
+                                    </TableBody>
+                                </Table>
+                            </TableContainer>
+                        </div>
+                        <div className="mt-2">
+                            <h2 className="font-bold text-lg mb-2">
+                                Customer Reviews
+                            </h2>
+                            <div className="flex flex-row bg-white bg-opacity-70 items-center gap-1 sm:gap-5 py-2 px-1 sm:py-5 sm:px-3 shadow-md rounded-md">
+                                <div>
+                                    <h3 className="text-center text-black">
+                                        <span className="text-2xl font-bold">
+                                            {calculateRatingAvg(book.reviews)}
+                                        </span>{" "}
+                                        out of 5
+                                    </h3>
+                                    <RatingController
+                                        rating={calculateRatingAvg(
+                                            book.reviews
+                                        )}
+                                        key={calculateRatingAvg(book.reviews)}
+                                        readOnly
+                                        isbn={book.isbn}
+                                        className="bg-inherit"
                                     />
-                                    <TableDetailRow
-                                        field="Title"
-                                        value={book.title}
-                                    />
-                                    <TableDetailRow
-                                        field="Authors"
-                                        value={book.authors
-                                            .map((author) => author.name)
-                                            .join(", ")}
-                                    />
-                                    <TableDetailRow
-                                        field="Subjects"
-                                        value={book.subjects
-                                            .map((subject) => subject.name)
-                                            .join(", ")}
-                                    />
-                                    <TableDetailRow
-                                        field="Published Date"
-                                        value={book.publishedDate?.toLocaleDateString()}
-                                    />
-                                    <TableDetailRow
-                                        field="Quantity"
-                                        value={book.quantity}
-                                    />
-                                </TableBody>
-                            </Table>
-                        </TableContainer>
+                                </div>
+                                <div className="w-full">
+                                    <RatingCount reviews={book.reviews} />
+                                </div>
+                            </div>
+                        </div>
                     </div>
+
                     <div className="mt-2 md:mt-0">
                         <h2 className="font-bold text-lg">Related Books</h2>
                         <RelatedBooks book={book} />

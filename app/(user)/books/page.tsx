@@ -17,7 +17,10 @@ const BooksPage = async ({
     const { subjects } = await getSubjects();
     return (
         <>
-            <SubHeading parent={["Home"]} current="Books" />
+            <SubHeading
+                parent={[{ name: "Home", href: "/" }]}
+                current="Books"
+            />
             <div className="md:grid grid-cols-3 lg:grid-cols-4 pb-4">
                 <div className="col-span-1 px-2 pt-4">
                     <h2 className="text-white text-2xl font-bold">Subjects</h2>
