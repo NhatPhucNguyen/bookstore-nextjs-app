@@ -9,6 +9,7 @@ import { getUserRating } from "./actions";
 import { mainTitle } from "@/app/utils/globalVariables";
 import { calculateRatingAvg } from "@/app/utils/calculateRatingAvg";
 import RatingCount from "./RatingCount";
+import AddToCart from "./AddToCart";
 const MAX_TITLE_LENGTH = 40;
 const BookDetails = async ({ params }: { params: { isbn: string } }) => {
     const { book } = await getBookByIsbn(params.isbn);
@@ -87,6 +88,7 @@ const BookDetails = async ({ params }: { params: { isbn: string } }) => {
                                     </>
                                 )}
                             </div>
+                            <AddToCart maxQuantity={book.quantity}/>
                         </section>
                     </div>
                 </div>
