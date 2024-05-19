@@ -5,12 +5,16 @@ import { usePathname } from "next/navigation";
 import { useState } from "react";
 import { logout } from "../(auth)/actions";
 import CartIcon from "./CartIcon";
-type NavarProps = {
-    simple?: boolean;
-    isAuthenticated?: boolean;
-};
 
-const MobileNavLink = ({ href, name }: { href: string; name: string }) => {
+const MobileNavLink = ({
+    href,
+    name,
+    closeDropdown,
+}: {
+    href: string;
+    name: string;
+    closeDropdown?: () => void;
+}) => {
     const pathname = usePathname();
     const isCurrent = pathname === href;
     return (
@@ -19,17 +23,22 @@ const MobileNavLink = ({ href, name }: { href: string; name: string }) => {
             className={`${
                 isCurrent ? "bg-gray-800 text-white" : "text-gray-300"
             } block rounded-md px-3 py-2 text-base font-medium hover:bg-gray-700 hover:text-white`}
+            onClick={closeDropdown}
         >
             {name}
         </Link>
     );
 };
-
+type NavarProps = {
+    simple?: boolean;
+    isAuthenticated?: boolean;
+};
 const Navbar = ({ simple, isAuthenticated }: NavarProps) => {
     const [openDropdown, setOpenDropdown] = useState(false);
+    const closeDropdown = () => setOpenDropdown(false);
     return (
         <>
-            <div className="w-full text-white h-15 flex justify-between align items-center md:py-5">
+            <div className="w-full text-white h-15 flex justify-between items-center md:py-5">
                 <div className="flex items-center text-xl font-bold">
                     <Image
                         src={"/text-logo-trans.png"}
@@ -104,15 +113,19 @@ const Navbar = ({ simple, isAuthenticated }: NavarProps) => {
                             </Link>
                         )}
                     </li>
-                    {!simple && <div className="pr-5">
-                        <CartIcon />
-                    </div>}
+                    {!simple && isAuthenticated && (
+                        <div>
+                            <CartIcon />
+                        </div>
+                    )}
                 </ul>
                 {/* Mobile */}
-                <div className="flex items-center md:hidden">
-                    {!simple && <div className="pr-5">
-                        <CartIcon />
-                    </div>}
+                <div className="flex items-center gap-4 md:hidden w-fit px-2">
+                    {!simple && isAuthenticated && (
+                        <div>
+                            <CartIcon />
+                        </div>
+                    )}
                     <button
                         type="button"
                         className="relative inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:bg-gray-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white"
@@ -173,11 +186,27 @@ const Navbar = ({ simple, isAuthenticated }: NavarProps) => {
                     <MobileNavLink href="/" name="Home" />
                     {!simple && (
                         <>
-                            <MobileNavLink href="/books" name="Books" />
-                            <MobileNavLink href="/trending" name="Trending" />
-                            <MobileNavLink href="/aboutUs" name="About Us" />
+                            <MobileNavLink
+                                href="/books"
+                                name="Books"
+                                closeDropdown={closeDropdown}
+                            />
+                            <MobileNavLink
+                                href="/trending"
+                                name="Trending"
+                                closeDropdown={closeDropdown}
+                            />
+                            <MobileNavLink
+                                href="/aboutUs"
+                                name="About Us"
+                                closeDropdown={closeDropdown}
+                            />
                             {!isAuthenticated && (
-                                <MobileNavLink href="/login" name="Login" />
+                                <MobileNavLink
+                                    href="/login"
+                                    name="Login"
+                                    closeDropdown={closeDropdown}
+                                />
                             )}
                         </>
                     )}

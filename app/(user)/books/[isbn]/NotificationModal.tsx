@@ -1,9 +1,15 @@
 "use client";
 import { Backdrop } from "@mui/material";
-import React, { useRef, MouseEvent } from "react";
+import React, { useRef, MouseEvent, use, useEffect } from "react";
 
 const NotificationModal = ({ handleClose }: { handleClose: () => void }) => {
     const ref = useRef<HTMLDivElement>(null);
+    useEffect(() => {
+        document.body.style.overflow = "hidden";
+        return () => {
+            document.body.style.overflow = "auto";
+        };
+    }, []);
     return (
         <Backdrop
             open={true}
@@ -15,7 +21,7 @@ const NotificationModal = ({ handleClose }: { handleClose: () => void }) => {
                 }
             }}
         >
-            <div className="bg-gray-400 bg-opacity-90 px-3 py-10 rounded-2xl">
+            <div className="bg-gray-400 bg-opacity-90 px-3 py-10 rounded-2xl min-w-fit md:w-96">
                 <h2 className="text-center text-2xl font-bold text-black">
                     Your book was added !
                 </h2>

@@ -3,7 +3,7 @@ import { Badge } from "@mui/material";
 import { FaCartShopping } from "react-icons/fa6";
 import { useCartContext } from "../context/CartContext";
 const CartIcon = () => {
-    const { cartItems } = useCartContext();
+    const { cartItems, error,loading } = useCartContext();
     return (
         <Badge badgeContent={cartItems ? cartItems.length : 0} color="success">
             <FaCartShopping className="text-xl" />

@@ -6,21 +6,23 @@ import useSwr from "swr";
 type CartContextType = {
     cartItems: CartItem[] | undefined;
     loading: boolean;
+    error: Error | null;
 };
 const CartContext = createContext<CartContextType | null>(null);
 
 const getCartItemsNumber = async (url: string) => {
-    const res = await fetch(url);
+    const res = await fetch(url, { cache: "no-cache" });
     if (res.ok) {
         const data = await res.json();
         return data as { cartItems: CartItem[] };
     }
+    throw new Error("Failed to fetch cart items");
 };
 const CartProvider = ({ children }: { children: ReactNode }) => {
-    const { data, isLoading } = useSwr("/api/cart", getCartItemsNumber);
+    const { data, isLoading, error } = useSwr("/api/cart", getCartItemsNumber);
     return (
         <CartContext.Provider
-            value={{ cartItems: data?.cartItems, loading: isLoading }}
+            value={{ cartItems: data?.cartItems, loading: isLoading, error }}
         >
             {children}
         </CartContext.Provider>
