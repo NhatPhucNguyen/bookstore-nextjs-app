@@ -123,9 +123,114 @@ export const getUserRating = async (isbn: string) => {
             bookIsbn: isbn,
             userId: user.id,
         },
-        select:{
-            rating:true
-        }
+        select: {
+            rating: true,
+        },
     });
     return review?.rating || 0;
+};
+
+export const addToCart = async (isbn: string, quantity: number) => {
+    try {
+        const user = await getUser();
+        if (!user) {
+            return {
+                error: {
+                    message: "You must be logged in to add to cart",
+                },
+            };
+        }
+        const foundCart = await prisma.cart.findFirst({
+            where: {
+                userId: user.id,
+            },
+        });
+        // If cart exists, check if item exists
+        if (foundCart) {
+            const foundItem = await prisma.cartItem.findFirst({
+                where: {
+                    cartId: foundCart.id,
+                    bookIsbn: isbn,
+                },
+            });
+            if (foundItem) {
+                await prisma.cartItem.update({
+                    where: {
+                        id: foundItem.id,
+                    },
+                    data: {
+                        quantity: foundItem.quantity + quantity,
+                    },
+                });
+                return { success: true };
+            }
+            await prisma.cartItem.create({
+                data: {
+                    quantity,
+                    book: {
+                        connect: {
+                            isbn,
+                        },
+                    },
+                    cart: {
+                        connect: {
+                            id: foundCart.id,
+                        },
+                    },
+                },
+            });
+            return { success: true };
+        }
+        // If cart doesn't exist, create cart and add item
+        await prisma.cart.create({
+            data: {
+                user: {
+                    connect: {
+                        id: user.id,
+                    },
+                },
+                cartItems: {
+                    create: {
+                        quantity,
+                        book: {
+                            connect: {
+                                isbn,
+                            },
+                        },
+                    },
+                },
+            },
+        });
+        return { success: true };
+    } catch (error) {
+        return {
+            error: {
+                message: "Failed to add to cart",
+            },
+        };
+    }
+};
+
+export const getCartItemsNumber = async () => {
+    const user = await getUser();
+    if (!user) {
+        return 0;
+    }
+    const cart = await prisma.cart.findFirst({
+        where: {
+            userId: user.id,
+        },
+        select: {
+            cartItems: {
+                select: {
+                    quantity: true,
+                },
+            },
+        },
+    });
+    if (!cart) {
+        return 0;
+    }
+    const total = cart.cartItems.length;
+    return total;
 };

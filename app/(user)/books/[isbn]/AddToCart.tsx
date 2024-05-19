@@ -1,8 +1,13 @@
 "use client";
+import { useToastContext } from "@/app/context/ToastContext";
 import React from "react";
 import { FaCartShopping } from "react-icons/fa6";
+import { addToCart } from "./actions";
+import { useParams } from "next/navigation";
 const AddToCart = ({ maxQuantity }: { maxQuantity: number }) => {
     const [value, setValue] = React.useState(1);
+    const {isbn} = useParams() as {isbn:string};
+    const {toastError} = useToastContext();
     return (
         <div className="w-full mt-2">
             <div className="mx-auto w-fit md:mx-0">
@@ -26,7 +31,7 @@ const AddToCart = ({ maxQuantity }: { maxQuantity: number }) => {
                         ) {
                             setValue(1);
                         } else {
-                            const quantity = parseInt(e.target.value) || 0;
+                            const quantity = parseInt(e.target.value) || 1;
                             setValue(
                                 quantity > maxQuantity ? maxQuantity : quantity
                             );
@@ -42,7 +47,12 @@ const AddToCart = ({ maxQuantity }: { maxQuantity: number }) => {
                 >
                     +
                 </button>
-                <button className="ml-2 bg-purple-950 h-10 w-30 px-3 rounded-lg hover:bg-white hover:text-black">
+                <button className="ml-2 bg-purple-950 h-10 w-30 px-3 rounded-lg hover:bg-white hover:text-black" onClick={async ()=>{
+                    const {error} = await addToCart(isbn, value);
+                    if (error) {
+                        toastError(error.message);
+                    }
+                }}>
                     <FaCartShopping className="inline text-inherit "/>
                     <span className="pl-2">Add to cart</span>
                 </button>

@@ -8,13 +8,16 @@ import RevealOnScroll from "./components/RevealOnScroll";
 import BestSellersSection from "./components/BestSellersSection";
 import SubjectsSection from "./components/SubjectsSection";
 import { getUser } from "./lib/session";
+import CartProvider from "./context/CartContext";
 
 export default async function Home() {
     const user = await getUser();
     return (
         <>
             <header>
-                <Navbar isAuthenticated={user ? true : false} />
+                <CartProvider>
+                    <Navbar isAuthenticated={user ? true : false} />
+                </CartProvider>
             </header>
             <main className="bg-main-background">
                 <Jumbotron />
