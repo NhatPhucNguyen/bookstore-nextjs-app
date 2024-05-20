@@ -32,8 +32,9 @@ const MobileNavLink = ({
 type NavarProps = {
     simple?: boolean;
     isAuthenticated?: boolean;
+    paymentLayout?: boolean;
 };
-const Navbar = ({ simple, isAuthenticated }: NavarProps) => {
+const Navbar = ({ simple, isAuthenticated, paymentLayout }: NavarProps) => {
     const [openDropdown, setOpenDropdown] = useState(false);
     const closeDropdown = () => setOpenDropdown(false);
     return (
@@ -54,6 +55,16 @@ const Navbar = ({ simple, isAuthenticated }: NavarProps) => {
                             Home
                         </Link>
                     </li>
+                    {paymentLayout && (
+                        <li>
+                            <Link
+                                href={"/books"}
+                                className="hover:text-secondary"
+                            >
+                                Books
+                            </Link>
+                        </li>
+                    )}
                     {!simple && (
                         <>
                             <li>
@@ -113,19 +124,11 @@ const Navbar = ({ simple, isAuthenticated }: NavarProps) => {
                             </Link>
                         )}
                     </li>
-                    {!simple && isAuthenticated && (
-                        <div>
-                            <CartIcon />
-                        </div>
-                    )}
+                    {!simple && isAuthenticated && <CartIcon />}
                 </ul>
                 {/* Mobile */}
                 <div className="flex items-center gap-4 md:hidden w-fit px-2">
-                    {!simple && isAuthenticated && (
-                        <div>
-                            <CartIcon />
-                        </div>
-                    )}
+                    {!simple && isAuthenticated && <CartIcon />}
                     <button
                         type="button"
                         className="relative inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:bg-gray-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white"
@@ -184,6 +187,13 @@ const Navbar = ({ simple, isAuthenticated }: NavarProps) => {
             >
                 <div className="space-y-1 px-2 pb-3 pt-2">
                     <MobileNavLink href="/" name="Home" />
+                    {paymentLayout && (
+                        <MobileNavLink
+                            href="/books"
+                            name="Books"
+                            closeDropdown={closeDropdown}
+                        />
+                    )}
                     {!simple && (
                         <>
                             <MobileNavLink

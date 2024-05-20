@@ -6,7 +6,7 @@ type SubHeadingProps = {
 };
 const SubHeading = ({ parent, current }: SubHeadingProps) => {
     return (
-        <Breadcrumbs className="hidden sm:block bg-white bg-opacity-50 py-3 px-10">
+        <Breadcrumbs className=" bg-white bg-opacity-50 py-3 px-10">
             {parent?.map((item,index) => (
                 <Link key={index} href={item.href}>
                     {item.name}

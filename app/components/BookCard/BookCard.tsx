@@ -6,7 +6,7 @@ import { calculateRatingAvg } from "@/app/utils/calculateRatingAvg";
 type BookCardProps = {
     book: BookDetails;
 };
-const BOOK_TITLE_MAX_LENGTH = 35;
+export const BOOK_TITLE_MAX_LENGTH = 35;
 const BookCard = ({ book }: BookCardProps) => {
     return (
         <div className="w-full min-h-[28rem] sm:h-full sm:flex flex-col">

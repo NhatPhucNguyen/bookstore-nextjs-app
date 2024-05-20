@@ -16,6 +16,7 @@ const config: Config = {
                     "linear-gradient(123deg, #ed8ca9 18% 18%, #9b4fe3 40% 59%, #c96969 84% 84%)",
                 "subject-background":
                     "linear-gradient(180deg, #cf99ff 14% 14%, #d1d1d1 50%, #dbb3ff 100% 83%)",
+                "cart-bg":"url('/cart-bg-image.jpg')"
             },
             colors: {
                 secondary: "#9747FF",

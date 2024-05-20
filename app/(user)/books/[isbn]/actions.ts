@@ -159,7 +159,7 @@ export const addToCart = async (isbn: string, quantity: number) => {
                         id: foundItem.id,
                     },
                     data: {
-                        quantity: foundItem.quantity + quantity,
+                        quantity,
                     },
                 });
                 return { success: true };
@@ -179,6 +179,7 @@ export const addToCart = async (isbn: string, quantity: number) => {
                     },
                 },
             });
+            revalidatePath("/checkout")
             return { success: true };
         }
         // If cart doesn't exist, create cart and add item
@@ -201,6 +202,7 @@ export const addToCart = async (isbn: string, quantity: number) => {
                 },
             },
         });
+        revalidatePath("/checkout")
         return { success: true };
     } catch (error) {
         return {

@@ -1,9 +1,11 @@
 "use client";
 import { Backdrop } from "@mui/material";
+import { useRouter } from "next/navigation";
 import React, { useRef, MouseEvent, use, useEffect } from "react";
 
 const NotificationModal = ({ handleClose }: { handleClose: () => void }) => {
     const ref = useRef<HTMLDivElement>(null);
+    const router = useRouter();
     useEffect(() => {
         document.body.style.overflow = "hidden";
         return () => {
@@ -25,7 +27,12 @@ const NotificationModal = ({ handleClose }: { handleClose: () => void }) => {
                 <h2 className="text-center text-2xl font-bold text-black">
                     Your book was added !
                 </h2>
-                <button className="block mx-auto w-60 bg-secondary py-2 rounded-3xl font-bold my-2 hover:bg-white hover:text-secondary">
+                <button
+                    className="block mx-auto w-60 bg-secondary py-2 rounded-3xl font-bold my-2 hover:bg-white hover:text-secondary"
+                    onClick={() => {
+                        router.push("/checkout");
+                    }}
+                >
                     View your cart
                 </button>
                 <button
