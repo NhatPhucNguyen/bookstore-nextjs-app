@@ -3,18 +3,19 @@ import { Rating } from "@mui/material";
 import React, { useState } from "react";
 import { createReview } from "./actions";
 import { useToastContext } from "@/app/context/ToastContext";
-
+type RatingControllerProps = {
+    isbn: string;
+    rating?: number;
+    readOnly?: boolean;
+    precision?: number;
+    className?: string;
+};
 const RatingController = ({
     isbn,
     rating,
     readOnly,
-    className
-}: {
-    isbn: string;
-    rating?: number;
-    readOnly?: boolean;
-    className?: string;
-}) => {
+    className,
+}: RatingControllerProps) => {
     const [value, setValue] = useState<number | null>(rating || 0);
     const [loading, setLoading] = useState(false);
     const { toastError, toastSuccess } = useToastContext();
@@ -23,6 +24,7 @@ const RatingController = ({
             disabled={loading}
             readOnly={readOnly}
             value={value}
+            precision={readOnly ? 0.5 : 1}
             onChange={async (event, newValue) => {
                 setLoading(true);
                 const { error } = await createReview(isbn, newValue || 0);

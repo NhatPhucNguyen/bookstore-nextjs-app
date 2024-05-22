@@ -20,9 +20,9 @@ const RatingBar = ({
                 <div
                     className={`${
                         count > 0
-                            ? `bg-orange-500 w-${Math.round(
-                                  (count / total) * 12
-                              )}/12`
+                            ? `bg-orange-500 w-[${Math.round(
+                                  (count / total) * 100
+                              )}%]`
                             : "bg-gray-200 w-full"
                     } h-full`}
                 />

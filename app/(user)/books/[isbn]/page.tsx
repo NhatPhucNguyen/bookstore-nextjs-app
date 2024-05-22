@@ -141,7 +141,7 @@ const BookDetails = async ({ params }: { params: { isbn: string } }) => {
                                 <div>
                                     <h3 className="text-center text-black">
                                         <span className="text-2xl font-bold">
-                                            {calculateRatingAvg(book.reviews)}
+                                            {calculateRatingAvg(book.reviews).toFixed(1)}
                                         </span>{" "}
                                         out of 5
                                     </h3>
