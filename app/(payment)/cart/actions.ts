@@ -3,7 +3,7 @@ import prisma from "@/app/lib/prisma";
 import { getUser } from "@/app/lib/session";
 import { revalidatePath } from "next/cache";
 
-export const getCartItems = async () => {
+export const getCart = async () => {
     const user = await getUser();
     if (!user) {
         return null;
@@ -32,12 +32,13 @@ export const getCartItems = async () => {
                     createdAt: "desc",
                 },
             },
+            id: true,
         },
     });
     if (!cart) {
         return null;
     }
-    return cart.cartItems;
+    return cart;
 };
 
 export const updateCartItemQuantity = async (id: number, quantity: number) => {

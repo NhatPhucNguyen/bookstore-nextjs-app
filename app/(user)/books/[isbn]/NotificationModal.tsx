@@ -30,7 +30,7 @@ const NotificationModal = ({ handleClose }: { handleClose: () => void }) => {
                 <button
                     className="block mx-auto w-60 bg-secondary py-2 rounded-3xl font-bold my-2 hover:bg-white hover:text-secondary"
                     onClick={() => {
-                        router.push("/checkout");
+                        router.push("/cart");
                     }}
                 >
                     View your cart

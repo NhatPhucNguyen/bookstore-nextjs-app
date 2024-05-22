@@ -9,15 +9,15 @@ const PaymentLayout = async ({ children }: { children: React.ReactNode }) => {
         return redirect("/login");
     }
     return (
-        <div>
-            <header>
+        <div className="min-h-screen bg-main-background">
+            <header className="bg-black">
                 <Navbar
                     simple
                     paymentLayout
                     isAuthenticated={user ? true : false}
                 />
             </header>
-            <main className="bg-main-background min-h-screen w-full">
+            <main className="w-full">
                 {children}
             </main>
         </div>

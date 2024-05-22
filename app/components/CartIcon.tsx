@@ -6,7 +6,7 @@ import Link from "next/link";
 const CartIcon = () => {
     const { cartItems, error, loading } = useCartContext();
     return (
-        <Link href={'/checkout'} className="hover:cursor-pointer hover:text-secondary">
+        <Link href={'/cart'} className="hover:cursor-pointer hover:text-secondary">
             <Badge
                 badgeContent={cartItems ? cartItems.length : 0}
                 color="success"

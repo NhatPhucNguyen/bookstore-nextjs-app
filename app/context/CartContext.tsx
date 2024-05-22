@@ -3,6 +3,7 @@ import { CartItem } from "@prisma/client";
 import React, { ReactNode } from "react";
 import { createContext } from "react";
 import useSwr from "swr";
+import axios from "axios";
 type CartContextType = {
     cartItems: CartItem[] | undefined;
     loading: boolean;
@@ -11,10 +12,9 @@ type CartContextType = {
 const CartContext = createContext<CartContextType | null>(null);
 
 const getCartItemsNumber = async (url: string) => {
-    const res = await fetch(url, { cache: "no-cache" });
-    if (res.ok) {
-        const data = await res.json();
-        return data as { cartItems: CartItem[] };
+    const res = await axios.get(url);
+    if (res.data) {
+        return res.data as { cartItems: CartItem[] };
     }
     throw new Error("Failed to fetch cart items");
 };
