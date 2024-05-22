@@ -4,7 +4,7 @@ import { FaCartShopping } from "react-icons/fa6";
 import { useCartContext } from "../context/CartContext";
 import Link from "next/link";
 const CartIcon = () => {
-    const { cartItems, error, loading } = useCartContext();
+    const { cartItems } = useCartContext();
     return (
         <Link href={'/cart'} className="hover:cursor-pointer hover:text-secondary">
             <Badge

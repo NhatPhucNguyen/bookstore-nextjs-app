@@ -49,7 +49,6 @@ function Form({ total }: { total: number }) {
             response.error.type == "validation_error"
         ) {
             setIsLoading(false);
-            return toastError(response.error.message || "An error occurred");
         } else {
             setIsLoading(false);
             return toastError("An error occurred");
@@ -77,7 +76,7 @@ function Form({ total }: { total: number }) {
                         {isLoading
                             ? "Processing..."
                             : `Confirm Payment - $${
-                                  Math.round(total * 100) / 100
+                                  (Math.round(total * 100) / 100).toFixed(2)
                               }`}
                     </button>
                     <Link

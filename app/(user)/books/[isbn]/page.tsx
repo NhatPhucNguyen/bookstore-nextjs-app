@@ -2,15 +2,14 @@ import TableDetailRow from "@/app/(admin)/control/books/[isbn]/TableDetailRow";
 import { getBookByIsbn } from "@/app/(admin)/control/books/actions";
 import BookCardImage from "@/app/components/BookCard/BookCardImage";
 import SubHeading from "@/app/components/SubHeading";
+import { calculateRatingAvg } from "@/app/utils/calculateRatingAvg";
+import { mainTitle } from "@/app/utils/globalVariables";
 import { Paper, Table, TableBody, TableContainer } from "@mui/material";
+import AddToCart from "./AddToCart";
 import RatingController from "./RatingController";
+import RatingCount from "./RatingCount";
 import RelatedBooks from "./RelatedBooks";
 import { getUserRating } from "./actions";
-import { mainTitle } from "@/app/utils/globalVariables";
-import { calculateRatingAvg } from "@/app/utils/calculateRatingAvg";
-import RatingCount from "./RatingCount";
-import AddToCart from "./AddToCart";
-import NotificationModal from "./NotificationModal";
 const MAX_TITLE_LENGTH = 40;
 const BookDetails = async ({ params }: { params: { isbn: string } }) => {
     const { book } = await getBookByIsbn(params.isbn);
@@ -89,7 +88,7 @@ const BookDetails = async ({ params }: { params: { isbn: string } }) => {
                                     </>
                                 )}
                             </div>
-                            <AddToCart maxQuantity={book.quantity} />
+                            {book.quantity === 0 ? <div className="text-center text-xl font-bold text-red-500 md:text-left">Sold out</div> : <AddToCart maxQuantity={book.quantity} />}
                         </section>
                     </div>
                 </div>
@@ -128,7 +127,7 @@ const BookDetails = async ({ params }: { params: { isbn: string } }) => {
                                         />
                                         <TableDetailRow
                                             field="Quantity"
-                                            value={book.quantity}
+                                            value={book.quantity || "Out of stock"}
                                         />
                                     </TableBody>
                                 </Table>

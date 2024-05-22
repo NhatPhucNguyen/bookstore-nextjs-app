@@ -61,6 +61,7 @@ const AddToCart = ({ maxQuantity }: { maxQuantity: number }) => {
                             setLoading(true);
                             const { error } = await addToCart(isbn, value);
                             if (error) {
+                                setLoading(false);
                                 return toastError(error.message);
                             }
                             setLoading(false);

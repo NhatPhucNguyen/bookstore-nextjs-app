@@ -140,6 +140,25 @@ export const addToCart = async (isbn: string, quantity: number) => {
                 },
             };
         }
+        const book = await prisma.book.findFirst({
+            where: {
+                isbn,
+            },
+        });
+        if (!book) {
+            return {
+                error: {
+                    message: "Book not found",
+                },
+            };
+        }
+        if (book.quantity < quantity) {
+            return {
+                error: {
+                    message: "Not enough stock",
+                },
+            };
+        }
         const foundCart = await prisma.cart.findFirst({
             where: {
                 userId: user.id,
@@ -179,7 +198,7 @@ export const addToCart = async (isbn: string, quantity: number) => {
                     },
                 },
             });
-            revalidatePath("/checkout")
+            revalidatePath("/checkout");
             return { success: true };
         }
         // If cart doesn't exist, create cart and add item
@@ -202,7 +221,7 @@ export const addToCart = async (isbn: string, quantity: number) => {
                 },
             },
         });
-        revalidatePath("/checkout")
+        revalidatePath("/checkout");
         return { success: true };
     } catch (error) {
         return {
