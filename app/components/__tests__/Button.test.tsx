@@ -1,9 +1,6 @@
-import { render, fireEvent, cleanup } from "@testing-library/react";
+import { fireEvent, render } from "@testing-library/react";
+import { describe, expect, test, vi } from "vitest";
 import Button from "../Button";
-import { describe, expect, test, vi, afterEach } from "vitest";
-afterEach(() => {
-    cleanup();
-});
 describe("Button Component", () => {
     test("renders children correctly", () => {
         const { getByText } = render(<Button>Click me</Button>);

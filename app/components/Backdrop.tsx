@@ -15,6 +15,7 @@ const Backdrop = ({ handleClose, className, children }: BackdropProps) => {
                     handleClose();
                 }
             }}
+            aria-label="backdrop"
         >
             {children}
         </div>
