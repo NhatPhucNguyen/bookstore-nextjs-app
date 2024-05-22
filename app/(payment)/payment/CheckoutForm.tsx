@@ -69,7 +69,7 @@ function Form({ total }: { total: number }) {
                 </CardContent>
                 <CardActions sx={{ display: "block", textAlign: "center" }}>
                     <button
-                        className="block w-full sm:w-1/2 mx-auto bg-secondary text-white py-1 rounded-md mb-2 disabled:opacity-50"
+                        className="block w-full sm:w-2/3 mx-auto bg-secondary text-white py-1 rounded-md mb-2 disabled:opacity-50"
                         disabled={
                             stripe === null || elements === null || isLoading
                         }

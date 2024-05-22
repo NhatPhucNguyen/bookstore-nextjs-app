@@ -1,14 +1,20 @@
 "use client";
-import { BOOK_TITLE_MAX_LENGTH } from '@/app/components/BookCard/BookCard';
-import BookCardImage from '@/app/components/BookCard/BookCardImage';
-import { useToastContext } from '@/app/context/ToastContext';
-import React, { useState } from 'react'
-import { removeCartItem, updateCartItemQuantity } from './actions';
-import { BookCartItem } from './Cart';
-import { IconButton } from '@mui/material';
-import { FaTrash } from 'react-icons/fa6';
+import { BOOK_TITLE_MAX_LENGTH } from "@/app/components/BookCard/BookCard";
+import BookCardImage from "@/app/components/BookCard/BookCardImage";
+import { useToastContext } from "@/app/context/ToastContext";
+import React, { useState } from "react";
+import { removeCartItem, updateCartItemQuantity } from "./actions";
+import { BookCartItem } from "./Cart";
+import { IconButton } from "@mui/material";
+import { FaTrash } from "react-icons/fa6";
 
-function CartItem({ cartItem }: { cartItem: BookCartItem }) {
+function CartItem({
+    cartItem,
+    readOnly,
+}: {
+    cartItem: BookCartItem;
+    readOnly?: boolean;
+}) {
     const finalPrice =
         cartItem.book.discount > 0
             ? (cartItem.book.price * (100 - cartItem.book.discount)) / 100
@@ -20,7 +26,7 @@ function CartItem({ cartItem }: { cartItem: BookCartItem }) {
     );
     const { toastError } = useToastContext();
     return (
-        <div className="flex flex-row gap-2 mt-2 text-black bg-white round-md p-1">
+        <div className={`flex flex-row gap-2 mt-2 text-black bg-white round-md p-1 ${readOnly && "bg-opacity-50"}`}>
             <div className="min-w-fit">
                 <BookCardImage
                     imageUrl={cartItem.book.imageUrl}
@@ -38,63 +44,77 @@ function CartItem({ cartItem }: { cartItem: BookCartItem }) {
                         : cartItem.book.title}
                 </h3>
                 <p className="font-bold">${finalPrice.toFixed(2)}</p>
-                <div className="flex flex-row">
-                    <button
-                        className="w-5 bg-gray-300 text-secondary border-none rounded-l-md disabled:opacity-50"
-                        onClick={async () => {
-                            if (itemQuantity > 1) {
-                                const { error } = await updateCartItemQuantity(
-                                    cartItem.id,
-                                    itemQuantity - 1
-                                );
-                                if (error) {
-                                    return toastError(error.message);
+                {readOnly ? (
+                    <p>Quantity: {cartItem.quantity}</p>
+                ) : (
+                    <div className="flex flex-row">
+                        <button
+                            className="w-5 bg-gray-300 text-secondary border-none rounded-l-md disabled:opacity-50"
+                            onClick={async () => {
+                                if (itemQuantity > 1) {
+                                    const { error } =
+                                        await updateCartItemQuantity(
+                                            cartItem.id,
+                                            itemQuantity - 1
+                                        );
+                                    if (error) {
+                                        return toastError(error.message);
+                                    }
+                                    setItemQuantity(itemQuantity - 1);
                                 }
-                                setItemQuantity(itemQuantity - 1);
-                            }
-                        }}
-                        disabled={itemQuantity === 1}
-                    >
-                        -
-                    </button>
-                    <span className="w-10 bg-gray-200 text-secondary text-center outline-none border-none">
-                        {itemQuantity}
-                    </span>
-                    <button
-                        className="w-5 bg-gray-300 text-secondary border-none rounded-r-md disabled:opacity-50"
-                        onClick={async () => {
-                            if (itemQuantity < cartItem.book.quantity) {
-                                const { error } = await updateCartItemQuantity(
-                                    cartItem.id,
-                                    itemQuantity + 1
-                                );
-                                if (error) {
-                                    return toastError(error.message);
+                            }}
+                            disabled={itemQuantity === 1}
+                        >
+                            -
+                        </button>
+                        <span className="w-10 bg-gray-200 text-secondary text-center outline-none border-none">
+                            {itemQuantity}
+                        </span>
+                        <button
+                            className="w-5 bg-gray-300 text-secondary border-none rounded-r-md disabled:opacity-50"
+                            onClick={async () => {
+                                if (itemQuantity < cartItem.book.quantity) {
+                                    const { error } =
+                                        await updateCartItemQuantity(
+                                            cartItem.id,
+                                            itemQuantity + 1
+                                        );
+                                    if (error) {
+                                        return toastError(error.message);
+                                    }
+                                    setItemQuantity(itemQuantity + 1);
                                 }
-                                setItemQuantity(itemQuantity + 1);
-                            }
-                        }}
-                        disabled={itemQuantity === cartItem.book.quantity}
-                    >
-                        +
-                    </button>
-                </div>
+                            }}
+                            disabled={itemQuantity === cartItem.book.quantity}
+                        >
+                            +
+                        </button>
+                    </div>
+                )}
                 <div className="flex justify-between mt-auto items-center">
                     <div className="font-bold">
                         Total: ${(finalPrice * itemQuantity).toFixed(2)}
                     </div>
-                    <IconButton size={"small"} className="hover:text-red-600" onClick={async ()=>{
-                        const {error} = await removeCartItem(cartItem.id);
-                        if(error){
-                            return toastError(error.message);
-                        }
-                    }}>
-                        <FaTrash />
-                    </IconButton>
+                    {!readOnly && (
+                        <IconButton
+                            size={"small"}
+                            className="hover:text-red-600"
+                            onClick={async () => {
+                                const { error } = await removeCartItem(
+                                    cartItem.id
+                                );
+                                if (error) {
+                                    return toastError(error.message);
+                                }
+                            }}
+                        >
+                            <FaTrash />
+                        </IconButton>
+                    )}
                 </div>
             </div>
         </div>
     );
 }
 
-export default CartItem
+export default CartItem;
