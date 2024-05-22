@@ -85,7 +85,7 @@ const Navbar = ({ simple, isAuthenticated, paymentLayout }: NavarProps) => {
                             </li>
                             <li>
                                 <Link
-                                    href={"/"}
+                                    href={"https://github.com/NhatPhucNguyen/bookstore-nextjs-app"}
                                     className="hover:text-secondary"
                                 >
                                     About Us
@@ -202,12 +202,12 @@ const Navbar = ({ simple, isAuthenticated, paymentLayout }: NavarProps) => {
                                 closeDropdown={closeDropdown}
                             />
                             <MobileNavLink
-                                href="/trending"
+                                href="/"
                                 name="Trending"
                                 closeDropdown={closeDropdown}
                             />
                             <MobileNavLink
-                                href="/aboutUs"
+                                href="https://github.com/NhatPhucNguyen/bookstore-nextjs-app"
                                 name="About Us"
                                 closeDropdown={closeDropdown}
                             />
