@@ -29,7 +29,7 @@ const RatingBar = ({
             </div>
 
             <div className="text-sm w-12 text-black">
-                <span>{Math.round((count / total) * 100)}%</span>
+                {count > 0 ? <span>{Math.round((count / total) * 100)}%</span> : <span>0%</span>}
             </div>
         </div>
     );
