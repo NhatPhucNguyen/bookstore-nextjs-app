@@ -7,11 +7,11 @@ import { Book, Prisma } from "@prisma/client";
 import { useForm } from "react-hook-form";
 import AsyncSelect from "react-select/async";
 import { z } from "zod";
-import { getAuthors } from "../authors/actions";
 import { useToastContext } from "@/app/context/ToastContext";
 import { useEffect, useState } from "react";
-import { getSubjects } from "../subjects/actions";
-import { createBook, updateBook } from "./actions";
+import { createBook, updateBook } from "../../../actions/bookActions";
+import { getSubjects } from "@/app/actions/subjectActions";
+import { getAuthors } from "@/app/actions/authorActions";
 const bookSchema = z.object({
     isbn: z
         .string()

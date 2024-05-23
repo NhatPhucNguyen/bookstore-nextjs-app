@@ -1,11 +1,9 @@
 import SubHeading from "@/app/components/SubHeading";
-import React from "react";
-import ReactSelect from "react-select";
-import SubjectFilter from "./SubjectFilter";
-import { getSubjects } from "@/app/(admin)/control/subjects/actions";
-import BookList from "./BookList";
 import { metadata } from "@/app/layout";
 import { mainTitle } from "@/app/utils/globalVariables";
+import BookList from "./BookList";
+import SubjectFilter from "./SubjectFilter";
+import { getSubjects } from "@/app/actions/subjectActions";
 metadata.title = mainTitle + " | Books - Time to find a book to read!";
 const BooksPage = async ({
     searchParams,

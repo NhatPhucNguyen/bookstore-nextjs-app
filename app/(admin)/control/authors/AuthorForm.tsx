@@ -6,8 +6,8 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { Author } from "@prisma/client";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-import { createAuthor, updateAuthor } from "./actions";
 import { useToastContext } from "@/app/context/ToastContext";
+import { createAuthor, updateAuthor } from "@/app/actions/authorActions";
 const authorSchema = z.object({
     name: z.string().min(1, {
         message: "Name is required",

@@ -1,6 +1,6 @@
 import BookDataGrid from "./BookDataGrid";
 import BookHeading from "./BookHeading";
-import { getAllBooks } from "./actions";
+import { getAllBooks } from "../../../actions/bookActions";
 
 const BooksPage = async () => {
     const { books, error } = await getAllBooks();

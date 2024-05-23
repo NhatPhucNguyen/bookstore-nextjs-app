@@ -3,7 +3,7 @@ import { BOOK_TITLE_MAX_LENGTH } from "@/app/components/BookCard/BookCard";
 import BookCardImage from "@/app/components/BookCard/BookCardImage";
 import { useToastContext } from "@/app/context/ToastContext";
 import React, { useState } from "react";
-import { removeCartItem, updateCartItemQuantity } from "./actions";
+import { removeCartItem, updateCartItemQuantity } from "../../actions/cartActions";
 import { BookCartItem } from "./Cart";
 import { IconButton } from "@mui/material";
 import { FaTrash } from "react-icons/fa6";
