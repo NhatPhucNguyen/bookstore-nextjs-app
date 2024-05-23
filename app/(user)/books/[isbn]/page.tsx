@@ -8,8 +8,8 @@ import AddToCart from "./AddToCart";
 import RatingController from "./RatingController";
 import RatingCount from "./RatingCount";
 import RelatedBooks from "./RelatedBooks";
-import { getUserRating } from "./actions";
 import { getBookByIsbn } from "@/app/actions/bookActions";
+import { getUserRating } from "@/app/actions/reviewActions";
 const MAX_TITLE_LENGTH = 40;
 const BookDetails = async ({ params }: { params: { isbn: string } }) => {
     const { book } = await getBookByIsbn(params.isbn);

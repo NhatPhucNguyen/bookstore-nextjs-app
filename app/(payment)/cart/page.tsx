@@ -1,6 +1,6 @@
 import SubHeading from "@/app/components/SubHeading";
 import Cart from "./Cart";
-import { getCart } from "./actions";
+import { getCart } from "../../actions/cartActions";
 import ToastProvider from "@/app/context/ToastContext";
 import { Metadata } from "next";
 import { mainTitle } from "@/app/utils/globalVariables";

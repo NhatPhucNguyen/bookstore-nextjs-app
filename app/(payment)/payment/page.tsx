@@ -2,7 +2,7 @@ import SubHeading from "@/app/components/SubHeading";
 import { calculateTotalPrice } from "@/app/utils/calculateTotalPrice";
 import { redirect } from "next/navigation";
 import { Stripe } from "stripe";
-import { getCart } from "../cart/actions";
+import { getCart } from "../../actions/cartActions";
 import CheckoutForm from "./CheckoutForm";
 import ToastProvider from "@/app/context/ToastContext";
 import CartItem from "../cart/CartItem";

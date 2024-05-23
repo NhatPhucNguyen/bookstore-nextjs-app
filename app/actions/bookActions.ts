@@ -4,6 +4,7 @@ import prisma from "@/app/lib/prisma";
 import { revalidatePath } from "next/cache";
 import { calculateRatingAvg } from "@/app/utils/calculateRatingAvg";
 import { BookInput } from "../(admin)/control/books/BookForm";
+import { BookDetails } from "../(admin)/control/books/BookDataGrid";
 
 export const createBook = async (bookInput: BookInput) => {
     try {
@@ -182,6 +183,64 @@ export const deleteBook = async (isbn: string) => {
             error: {
                 message: "Failed to delete book",
             },
+        };
+    }
+};
+
+export const getRelatedBooks = async (book: BookDetails, limit?: number) => {
+    const subjectsId = book.subjects.map((subject) => ({
+        id: subject.id,
+    }));
+    const authorsId = book.authors.map((author) => ({
+        id: author.id,
+    }));
+    try {
+        const books = await prisma.book.findMany({
+            include: {
+                authors: true,
+                subjects: true,
+                reviews: true,
+            },
+            where: {
+                OR: [
+                    {
+                        subjects: {
+                            some: {
+                                OR: subjectsId,
+                            },
+                        },
+                    },
+                    {
+                        authors: {
+                            some: {
+                                OR: authorsId,
+                            },
+                        },
+                    },
+                ],
+            },
+        });
+        if (books.length < 1) {
+            const books = await prisma.book.findMany({
+                include: {
+                    authors: true,
+                    subjects: true,
+                },
+                take: limit || 4,
+            });
+            return { books };
+        }
+        const newBooks = books.map((book) => {
+            const rating = calculateRatingAvg(book.reviews);
+            return {
+                ...book,
+                rating,
+            };
+        });
+        return { books: newBooks };
+    } catch (e) {
+        return {
+            error: { message: "Failed to get related books" },
         };
     }
 };

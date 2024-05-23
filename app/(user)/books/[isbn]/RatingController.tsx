@@ -1,8 +1,8 @@
 "use client";
 import { Rating } from "@mui/material";
 import React, { useState } from "react";
-import { createReview } from "./actions";
 import { useToastContext } from "@/app/context/ToastContext";
+import { createReview } from "@/app/actions/reviewActions";
 type RatingControllerProps = {
     isbn: string;
     rating?: number;
