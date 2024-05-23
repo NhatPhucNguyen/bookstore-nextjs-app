@@ -1,3 +1,4 @@
+"use server";
 import { revalidatePath } from "next/cache";
 import prisma from "../lib/prisma";
 import { getUser } from "../lib/session";
@@ -46,6 +47,7 @@ export const createReview = async (isbn: string, rating: number) => {
         revalidatePath(`/books/${isbn}`);
         return { success: true };
     } catch (e) {
+        console.log(e);
         return {
             error: { message: "Failed to submit review" },
         };
