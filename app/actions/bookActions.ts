@@ -1,9 +1,9 @@
 "use server";
 
 import prisma from "@/app/lib/prisma";
-import { BookInput } from "./BookForm";
 import { revalidatePath } from "next/cache";
 import { calculateRatingAvg } from "@/app/utils/calculateRatingAvg";
+import { BookInput } from "../(admin)/control/books/BookForm";
 
 export const createBook = async (bookInput: BookInput) => {
     try {

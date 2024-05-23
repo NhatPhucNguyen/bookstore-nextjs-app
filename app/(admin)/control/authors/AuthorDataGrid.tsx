@@ -10,7 +10,7 @@ import {
     EditActionCell,
     ViewActionCell,
 } from "../components/ActionCells";
-import { deleteAuthor } from "./actions";
+import { deleteAuthor } from "@/app/actions/authorActions";
 type AuthorDataGridProps = {
     authors: Prisma.AuthorGetPayload<{
         include: { _count: { select: { books: true } } };

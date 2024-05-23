@@ -8,10 +8,10 @@ import {
     ViewActionCell,
 } from "../components/ActionCells";
 import { useToastContext } from "@/app/context/ToastContext";
-import { deleteBook } from "./actions";
 import { Link } from "@mui/material";
 import { useModalContext } from "@/app/context/ModalContext";
 import { useRouter } from "next/navigation";
+import { deleteBook } from "@/app/actions/bookActions";
 export type BookDetails = Prisma.BookGetPayload<{
     include: {
         subjects: true;

@@ -1,7 +1,7 @@
 import { BackButton } from "@/app/components/Button";
 import { metadata } from "@/app/layout";
 import Heading from "../../components/Heading";
-import { getBookByIsbn } from "../actions";
+import { getBookByIsbn } from "../../../../actions/bookActions";
 import BookCoverImage from "./BookCoverImage";
 import {
     Link,

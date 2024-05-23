@@ -1,5 +1,4 @@
 import TableDetailRow from "@/app/(admin)/control/books/[isbn]/TableDetailRow";
-import { getBookByIsbn } from "@/app/(admin)/control/books/actions";
 import BookCardImage from "@/app/components/BookCard/BookCardImage";
 import SubHeading from "@/app/components/SubHeading";
 import { calculateRatingAvg } from "@/app/utils/calculateRatingAvg";
@@ -10,6 +9,7 @@ import RatingController from "./RatingController";
 import RatingCount from "./RatingCount";
 import RelatedBooks from "./RelatedBooks";
 import { getUserRating } from "./actions";
+import { getBookByIsbn } from "@/app/actions/bookActions";
 const MAX_TITLE_LENGTH = 40;
 const BookDetails = async ({ params }: { params: { isbn: string } }) => {
     const { book } = await getBookByIsbn(params.isbn);

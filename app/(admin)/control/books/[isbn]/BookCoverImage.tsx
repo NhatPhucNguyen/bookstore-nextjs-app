@@ -7,7 +7,7 @@ import Button from "@/app/components/Button";
 import { useRouter } from "next/navigation";
 import { useModalContext } from "@/app/context/ModalContext";
 import { useToastContext } from "@/app/context/ToastContext";
-import { deleteBook } from "../actions";
+import { deleteBook } from "@/app/actions/bookActions";
 
 const BookCoverImage = ({ book }: { book: BookDetails }) => {
     const router = useRouter();

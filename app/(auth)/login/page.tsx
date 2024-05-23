@@ -4,9 +4,9 @@ import FormController from "../../components/FormController";
 import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { login } from "../actions";
 import { useToastContext } from "@/app/context/ToastContext";
 import { useRouter } from "next/navigation";
+import { login } from "@/app/actions/authActions";
 const LoginSchema = z.object({
     email: z.string().email({ message: "Invalid email address" }).trim(),
     password: z.string().min(1, { message: "Password is required" }),

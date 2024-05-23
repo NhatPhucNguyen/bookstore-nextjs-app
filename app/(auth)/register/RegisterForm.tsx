@@ -4,9 +4,9 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-import { signup } from "../actions";
 import FormController from "@/app/components/FormController";
 import Link from "next/link";
+import { signup } from "@/app/actions/authActions";
 const SignUpSchema = z
     .object({
         email: z.string().email({ message: "Invalid email address" }).trim(),

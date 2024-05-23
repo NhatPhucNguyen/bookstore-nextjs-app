@@ -3,8 +3,8 @@ import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
-import { logout } from "../(auth)/actions";
 import CartIcon from "./CartIcon";
+import { logout } from "../actions/authActions";
 
 const MobileNavLink = ({
     href,
