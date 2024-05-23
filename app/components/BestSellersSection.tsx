@@ -1,6 +1,6 @@
 import React from "react";
-import { getAllBooks } from "../(admin)/control/books/actions";
 import SellingBookCard from "./BookCard/SellingBookCard";
+import { getAllBooks } from "../actions/bookActions";
 
 const BestSellersSection = async () => {
     const { books, error } = await getAllBooks({ quantity: 5});

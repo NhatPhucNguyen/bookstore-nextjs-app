@@ -1,6 +1,6 @@
+import { getSubjects } from "@/app/actions/subjectActions";
 import SubjectDataGrid from "./SubjectDataGrid";
 import SubjectHeading from "./SubjectHeading";
-import { getSubjects } from "./actions";
 
 const Subjects = async () => {
     const { subjects, error } = await getSubjects();

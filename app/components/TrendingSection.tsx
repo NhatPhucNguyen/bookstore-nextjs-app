@@ -1,7 +1,7 @@
 import React from "react";
 import BookCard from "./BookCard/BookCard";
-import { getAllBooks } from "../(admin)/control/books/actions";
 import RevealOnScroll from "./RevealOnScroll";
+import { getAllBooks } from "../actions/bookActions";
 
 const TrendingSection = async () => {
     const { books, error } = await getAllBooks({ quantity: 5 });

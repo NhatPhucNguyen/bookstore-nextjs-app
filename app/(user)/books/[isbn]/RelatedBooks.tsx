@@ -1,7 +1,7 @@
 import React from "react";
-import { getRelatedBooks } from "./actions";
 import { BookDetails } from "@/app/(admin)/control/books/BookDataGrid";
 import SellingBookCard from "@/app/components/BookCard/SellingBookCard";
+import { getRelatedBooks } from "@/app/actions/bookActions";
 
 const RelatedBooks = async ({ book }: { book: BookDetails }) => {
     const { books, error } = await getRelatedBooks(book);

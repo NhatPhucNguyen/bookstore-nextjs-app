@@ -3,8 +3,8 @@ import React, { useState } from "react";
 import Backdrop from "../../../components/Backdrop";
 import Image from "next/image";
 import SidebarLinks from "./SidebarLinks";
-import { logout } from "@/app/(auth)/actions";
 import { useRouter } from "next/navigation";
+import { logout } from "@/app/actions/authActions";
 
 const Sidebar = () => {
     const [open, setOpen] = useState(false);

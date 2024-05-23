@@ -1,5 +1,5 @@
+import { getAuthors } from "@/app/actions/authorActions";
 import AuthorDataGrid from "./AuthorDataGrid";
-import { getAuthors } from "./actions";
 const AuthorList = async () => {
     const { authors, error } = await getAuthors();
     if (error) {

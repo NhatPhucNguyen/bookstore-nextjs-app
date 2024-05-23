@@ -1,4 +1,4 @@
-import { getAllBooks } from "@/app/(admin)/control/books/actions";
+import { getAllBooks } from "@/app/actions/bookActions";
 import BookCard from "@/app/components/BookCard/BookCard";
 import React from "react";
 const BookList = async ({ subject }: { subject?: string }) => {

@@ -4,9 +4,9 @@ import Image from "next/image";
 import { Author } from "@prisma/client";
 import Button from "@/app/components/Button";
 import { useModalContext } from "@/app/context/ModalContext";
-import { deleteAuthor } from "../actions";
 import { useToastContext } from "@/app/context/ToastContext";
 import { useRouter } from "next/navigation";
+import { deleteAuthor } from "@/app/actions/authorActions";
 const AuthorImage = ({ author }: { author: Author }) => {
     const { openModal } = useModalContext();
     const { toastError, toastSuccess } = useToastContext();

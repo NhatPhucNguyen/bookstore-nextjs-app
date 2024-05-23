@@ -2,7 +2,7 @@
 import { useToastContext } from "@/app/context/ToastContext";
 import React from "react";
 import { FaCartShopping } from "react-icons/fa6";
-import { addToCart } from "./actions";
+import { addToCart } from "../../../actions/cartActions";
 import { useParams } from "next/navigation";
 import NotificationModal from "./NotificationModal";
 import { CircularProgress } from "@mui/material";

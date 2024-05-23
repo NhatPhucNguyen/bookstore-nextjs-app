@@ -1,6 +1,6 @@
 import React from "react";
-import { getSubjects } from "../(admin)/control/subjects/actions";
 import Link from "next/link";
+import { getSubjects } from "../actions/subjectActions";
 
 const SubjectsSection = async () => {
     const { subjects, error } = await getSubjects();
