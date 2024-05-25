@@ -132,7 +132,7 @@ const Navbar = ({ simple, isAuthenticated, paymentLayout }: NavarProps) => {
                     <button
                         type="button"
                         className="relative inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:bg-gray-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white"
-                        aria-controls="mobile-menu"
+                        aria-label="mobile-menu"
                         aria-expanded="false"
                         onClick={() => setOpenDropdown(!openDropdown)}
                     >
@@ -184,6 +184,7 @@ const Navbar = ({ simple, isAuthenticated, paymentLayout }: NavarProps) => {
                     openDropdown ? "absolute" : "hidden"
                 }  md:hidden w-full right-0 bg-gray-900 z-50`}
                 id="mobile-menu"
+                aria-label="mobile-dropdown"
             >
                 <div className="space-y-1 px-2 pb-3 pt-2">
                     <MobileNavLink href="/" name="Home" />

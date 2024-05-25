@@ -67,6 +67,7 @@ const AddToCart = ({ maxQuantity }: { maxQuantity: number }) => {
                             setLoading(false);
                             return setOpenModal(true);
                         }}
+                        aria-label="add-to-cart-button"
                     >
                         {loading ? (
                             <CircularProgress size={15}/>

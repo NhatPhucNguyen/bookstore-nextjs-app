@@ -1,3 +1,4 @@
+import { LinearProgress } from "@mui/material";
 import { Review } from "@prisma/client";
 import React from "react";
 import { FaStar } from "react-icons/fa6";
@@ -17,19 +18,19 @@ const RatingBar = ({
                 <span className="text-black">{ratingNumber}</span>
             </div>
             <div className="bg-gray-200 w-full h-1 mt-2">
-                <div
-                    className={`${
-                        count > 0
-                            ? `bg-orange-500 w-[${Math.round(
-                                  (count / total) * 100
-                              )}%]`
-                            : "bg-gray-200 w-full"
-                    } h-full`}
+                <LinearProgress
+                    value={Math.round((count / total) * 100)}
+                    variant="determinate"
+                    color="warning"
                 />
             </div>
 
             <div className="text-sm w-12 text-black">
-                {count > 0 ? <span>{Math.round((count / total) * 100)}%</span> : <span>0%</span>}
+                {count > 0 ? (
+                    <span>{Math.round((count / total) * 100)}%</span>
+                ) : (
+                    <span>0%</span>
+                )}
             </div>
         </div>
     );
